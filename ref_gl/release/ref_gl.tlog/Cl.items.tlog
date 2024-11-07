@@ -1,0 +1,13 @@
+C:\school_dev\IT266\IT266-Quake-2-Mod\ref_gl\gl_draw.c;C:\school_dev\IT266\IT266-Quake-2-Mod\ref_gl\release\gl_draw.obj
+C:\school_dev\IT266\IT266-Quake-2-Mod\ref_gl\gl_image.c;C:\school_dev\IT266\IT266-Quake-2-Mod\ref_gl\release\gl_image.obj
+C:\school_dev\IT266\IT266-Quake-2-Mod\ref_gl\gl_light.c;C:\school_dev\IT266\IT266-Quake-2-Mod\ref_gl\release\gl_light.obj
+C:\school_dev\IT266\IT266-Quake-2-Mod\ref_gl\gl_mesh.c;C:\school_dev\IT266\IT266-Quake-2-Mod\ref_gl\release\gl_mesh.obj
+C:\school_dev\IT266\IT266-Quake-2-Mod\ref_gl\gl_model.c;C:\school_dev\IT266\IT266-Quake-2-Mod\ref_gl\release\gl_model.obj
+C:\school_dev\IT266\IT266-Quake-2-Mod\ref_gl\gl_rmain.c;C:\school_dev\IT266\IT266-Quake-2-Mod\ref_gl\release\gl_rmain.obj
+C:\school_dev\IT266\IT266-Quake-2-Mod\ref_gl\gl_rmisc.c;C:\school_dev\IT266\IT266-Quake-2-Mod\ref_gl\release\gl_rmisc.obj
+C:\school_dev\IT266\IT266-Quake-2-Mod\ref_gl\gl_rsurf.c;C:\school_dev\IT266\IT266-Quake-2-Mod\ref_gl\release\gl_rsurf.obj
+C:\school_dev\IT266\IT266-Quake-2-Mod\ref_gl\gl_warp.c;C:\school_dev\IT266\IT266-Quake-2-Mod\ref_gl\release\gl_warp.obj
+C:\school_dev\IT266\IT266-Quake-2-Mod\win32\glw_imp.c;C:\school_dev\IT266\IT266-Quake-2-Mod\ref_gl\release\glw_imp.obj
+C:\school_dev\IT266\IT266-Quake-2-Mod\game\q_shared.c;C:\school_dev\IT266\IT266-Quake-2-Mod\ref_gl\release\q_shared.obj
+C:\school_dev\IT266\IT266-Quake-2-Mod\win32\q_shwin.c;C:\school_dev\IT266\IT266-Quake-2-Mod\ref_gl\release\q_shwin.obj
+C:\school_dev\IT266\IT266-Quake-2-Mod\win32\qgl_win.c;C:\school_dev\IT266\IT266-Quake-2-Mod\ref_gl\release\qgl_win.obj
