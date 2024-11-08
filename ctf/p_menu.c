@@ -8,7 +8,7 @@ of the License, or (at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 See the GNU General Public License for more details.
 
@@ -23,10 +23,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // this is so that a static set of pmenu entries can be used
 // for multiple clients and changed without interference
 // note that arg will be freed when the menu is closed, it must be allocated memory
-pmenuhnd_t *PMenu_Open(edict_t *ent, pmenu_t *entries, int cur, int num, void *arg)
+pmenuhnd_t* PMenu_Open(edict_t* ent, pmenu_t* entries, int cur, int num, void* arg)
 {
-	pmenuhnd_t *hnd;
-	pmenu_t *p;
+	pmenuhnd_t* hnd;
+	pmenu_t* p;
 	int i;
 
 	if (!ent->client)
@@ -53,7 +53,8 @@ pmenuhnd_t *PMenu_Open(edict_t *ent, pmenu_t *entries, int cur, int num, void *a
 		for (i = 0, p = entries; i < num; i++, p++)
 			if (p->SelectFunc)
 				break;
-	} else
+	}
+	else
 		i = cur;
 
 	if (i >= num)
@@ -66,15 +67,15 @@ pmenuhnd_t *PMenu_Open(edict_t *ent, pmenu_t *entries, int cur, int num, void *a
 	ent->client->menu = hnd;
 
 	PMenu_Do_Update(ent);
-	gi.unicast (ent, true);
+	gi.unicast(ent, true);
 
 	return hnd;
 }
 
-void PMenu_Close(edict_t *ent)
+void PMenu_Close(edict_t* ent)
 {
 	int i;
-	pmenuhnd_t *hnd;
+	pmenuhnd_t* hnd;
 
 	if (!ent->client->menu)
 		return;
@@ -92,7 +93,7 @@ void PMenu_Close(edict_t *ent)
 }
 
 // only use on pmenu's that have been called with PMenu_Open
-void PMenu_UpdateEntry(pmenu_t *entry, const char *text, int align, SelectFunc_t SelectFunc)
+void PMenu_UpdateEntry(pmenu_t* entry, const char* text, int align, SelectFunc_t SelectFunc)
 {
 	if (entry->text)
 		free(entry->text);
@@ -101,14 +102,14 @@ void PMenu_UpdateEntry(pmenu_t *entry, const char *text, int align, SelectFunc_t
 	entry->SelectFunc = SelectFunc;
 }
 
-void PMenu_Do_Update(edict_t *ent)
+void PMenu_Do_Update(edict_t* ent)
 {
 	char string[1400];
 	int i;
-	pmenu_t *p;
+	pmenu_t* p;
 	int x;
-	pmenuhnd_t *hnd;
-	char *t;
+	pmenuhnd_t* hnd;
+	char* t;
 	qboolean alt = false;
 
 	if (!ent->client->menu) {
@@ -130,9 +131,9 @@ void PMenu_Do_Update(edict_t *ent)
 		}
 		sprintf(string + strlen(string), "yv %d ", 32 + i * 8);
 		if (p->align == PMENU_ALIGN_CENTER)
-			x = 196/2 - strlen(t)*4 + 64;
+			x = 196 / 2 - strlen(t) * 4 + 64;
 		else if (p->align == PMENU_ALIGN_RIGHT)
-			x = 64 + (196 - strlen(t)*8);
+			x = 64 + (196 - strlen(t) * 8);
 		else
 			x = 64;
 
@@ -148,11 +149,11 @@ void PMenu_Do_Update(edict_t *ent)
 		alt = false;
 	}
 
-	gi.WriteByte (svc_layout);
-	gi.WriteString (string);
+	gi.WriteByte(svc_layout);
+	gi.WriteString(string);
 }
 
-void PMenu_Update(edict_t *ent)
+void PMenu_Update(edict_t* ent)
 {
 	if (!ent->client->menu) {
 		gi.dprintf("warning:  ent has no menu\n");
@@ -162,7 +163,7 @@ void PMenu_Update(edict_t *ent)
 	if (level.time - ent->client->menutime >= 1.0) {
 		// been a second or more since last update, update now
 		PMenu_Do_Update(ent);
-		gi.unicast (ent, true);
+		gi.unicast(ent, true);
 		ent->client->menutime = level.time;
 		ent->client->menudirty = false;
 	}
@@ -170,11 +171,11 @@ void PMenu_Update(edict_t *ent)
 	ent->client->menudirty = true;
 }
 
-void PMenu_Next(edict_t *ent)
+void PMenu_Next(edict_t* ent)
 {
-	pmenuhnd_t *hnd;
+	pmenuhnd_t* hnd;
 	int i;
-	pmenu_t *p;
+	pmenu_t* p;
 
 	if (!ent->client->menu) {
 		gi.dprintf("warning:  ent has no menu\n");
@@ -201,11 +202,11 @@ void PMenu_Next(edict_t *ent)
 	PMenu_Update(ent);
 }
 
-void PMenu_Prev(edict_t *ent)
+void PMenu_Prev(edict_t* ent)
 {
-	pmenuhnd_t *hnd;
+	pmenuhnd_t* hnd;
 	int i;
-	pmenu_t *p;
+	pmenu_t* p;
 
 	if (!ent->client->menu) {
 		gi.dprintf("warning:  ent has no menu\n");
@@ -223,7 +224,8 @@ void PMenu_Prev(edict_t *ent)
 		if (i == 0) {
 			i = hnd->num - 1;
 			p = hnd->entries + i;
-		} else
+		}
+		else
 			i--, p--;
 		if (p->SelectFunc)
 			break;
@@ -234,10 +236,10 @@ void PMenu_Prev(edict_t *ent)
 	PMenu_Update(ent);
 }
 
-void PMenu_Select(edict_t *ent)
+void PMenu_Select(edict_t* ent)
 {
-	pmenuhnd_t *hnd;
-	pmenu_t *p;
+	pmenuhnd_t* hnd;
+	pmenu_t* p;
 
 	if (!ent->client->menu) {
 		gi.dprintf("warning:  ent has no menu\n");

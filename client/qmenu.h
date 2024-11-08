@@ -8,7 +8,7 @@ of the License, or (at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 See the GNU General Public License for more details.
 
@@ -53,30 +53,30 @@ typedef struct _tag_menuframework
 
 	int	nitems;
 	int nslots;
-	void *items[64];
+	void* items[64];
 
-	const char *statusbar;
+	const char* statusbar;
 
-	void (*cursordraw)( struct _tag_menuframework *m );
-	
+	void (*cursordraw)(struct _tag_menuframework* m);
+
 } menuframework_s;
 
 typedef struct
 {
 	int type;
-	const char *name;
+	const char* name;
 	int x, y;
-	menuframework_s *parent;
+	menuframework_s* parent;
 	int cursor_offset;
 	int	localdata[4];
 	unsigned flags;
 
-	const char *statusbar;
+	const char* statusbar;
 
-	void (*callback)( void *self );
-	void (*statusbarfunc)( void *self );
-	void (*ownerdraw)( void *self );
-	void (*cursordraw)( void *self );
+	void (*callback)(void* self);
+	void (*statusbarfunc)(void* self);
+	void (*ownerdraw)(void* self);
+	void (*cursordraw)(void* self);
 } menucommon_s;
 
 typedef struct
@@ -90,7 +90,7 @@ typedef struct
 	int			visible_offset;
 } menufield_s;
 
-typedef struct 
+typedef struct
 {
 	menucommon_s generic;
 
@@ -107,7 +107,7 @@ typedef struct
 
 	int curvalue;
 
-	const char **itemnames;
+	const char** itemnames;
 } menulist_s;
 
 typedef struct
@@ -120,21 +120,21 @@ typedef struct
 	menucommon_s generic;
 } menuseparator_s;
 
-qboolean Field_Key( menufield_s *field, int key );
+qboolean Field_Key(menufield_s* field, int key);
 
-void	Menu_AddItem( menuframework_s *menu, void *item );
-void	Menu_AdjustCursor( menuframework_s *menu, int dir );
-void	Menu_Center( menuframework_s *menu );
-void	Menu_Draw( menuframework_s *menu );
-void	*Menu_ItemAtCursor( menuframework_s *m );
-qboolean Menu_SelectItem( menuframework_s *s );
-void	Menu_SetStatusBar( menuframework_s *s, const char *string );
-void	Menu_SlideItem( menuframework_s *s, int dir );
-int		Menu_TallySlots( menuframework_s *menu );
+void	Menu_AddItem(menuframework_s* menu, void* item);
+void	Menu_AdjustCursor(menuframework_s* menu, int dir);
+void	Menu_Center(menuframework_s* menu);
+void	Menu_Draw(menuframework_s* menu);
+void* Menu_ItemAtCursor(menuframework_s* m);
+qboolean Menu_SelectItem(menuframework_s* s);
+void	Menu_SetStatusBar(menuframework_s* s, const char* string);
+void	Menu_SlideItem(menuframework_s* s, int dir);
+int		Menu_TallySlots(menuframework_s* menu);
 
-void	 Menu_DrawString( int, int, const char * );
-void	 Menu_DrawStringDark( int, int, const char * );
-void	 Menu_DrawStringR2L( int, int, const char * );
-void	 Menu_DrawStringR2LDark( int, int, const char * );
+void	 Menu_DrawString(int, int, const char*);
+void	 Menu_DrawStringDark(int, int, const char*);
+void	 Menu_DrawStringR2L(int, int, const char*);
+void	 Menu_DrawStringR2LDark(int, int, const char*);
 
 #endif

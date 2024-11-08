@@ -1,1 +1,4 @@
 C:\school_dev\IT266\IT266-Quake-2-Mod\release\quake2.exe
+C:\school dev\Game Modding\IT266-Quake-2-Mod\release\quake2.exe
+C:\school_dev\Game Modding\IT266-Quake-2-Mod\release\quake2.exe
+C:\school_dev\Game_Modding\IT266-Quake-2-Mod\release\quake2.exe
