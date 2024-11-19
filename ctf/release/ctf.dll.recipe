@@ -2,7 +2,7 @@
 <Project>
   <ProjectOutputs>
     <ProjectOutput>
-      <FullPath>C:\school_dev\IT266\IT266-Quake-2-Mod\ctf\release\ctf.dll</FullPath>
+      <FullPath>C:\school_dev\Game_Modding\IT266-Quake-2-Mod\ctf\release\ctf.dll</FullPath>
     </ProjectOutput>
   </ProjectOutputs>
   <ContentFiles />

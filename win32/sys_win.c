@@ -8,7 +8,7 @@ of the License, or (at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 See the GNU General Public License for more details.
 
@@ -52,7 +52,7 @@ static HANDLE		qwclsemaphore;
 
 #define	MAX_NUM_ARGVS	128
 int			argc;
-char		*argv[MAX_NUM_ARGVS];
+char* argv[MAX_NUM_ARGVS];
 
 
 /*
@@ -64,65 +64,65 @@ SYSTEM IO
 */
 
 
-void Sys_Error (char *error, ...)
+void Sys_Error(char* error, ...)
 {
 	va_list		argptr;
 	char		text[1024];
 
-	CL_Shutdown ();
-	Qcommon_Shutdown ();
+	CL_Shutdown();
+	Qcommon_Shutdown();
 
-	va_start (argptr, error);
-	vsprintf (text, error, argptr);
-	va_end (argptr);
+	va_start(argptr, error);
+	vsprintf(text, error, argptr);
+	va_end(argptr);
 
-	MessageBox(NULL, text, "Error", 0 /* MB_OK */ );
+	MessageBox(NULL, text, "Error", 0 /* MB_OK */);
 
 	if (qwclsemaphore)
-		CloseHandle (qwclsemaphore);
+		CloseHandle(qwclsemaphore);
 
-// shut down QHOST hooks if necessary
-	DeinitConProc ();
+	// shut down QHOST hooks if necessary
+	DeinitConProc();
 
-	exit (1);
+	exit(1);
 }
 
-void Sys_Quit (void)
+void Sys_Quit(void)
 {
-	timeEndPeriod( 1 );
+	timeEndPeriod(1);
 
 	CL_Shutdown();
-	Qcommon_Shutdown ();
-	CloseHandle (qwclsemaphore);
+	Qcommon_Shutdown();
+	CloseHandle(qwclsemaphore);
 	if (dedicated && dedicated->value)
-		FreeConsole ();
+		FreeConsole();
 
-// shut down QHOST hooks if necessary
-	DeinitConProc ();
+	// shut down QHOST hooks if necessary
+	DeinitConProc();
 
-	exit (0);
+	exit(0);
 }
 
 
-void WinError (void)
+void WinError(void)
 {
 	LPVOID lpMsgBuf;
 
-	FormatMessage( 
+	FormatMessage(
 		FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM,
 		NULL,
 		GetLastError(),
 		MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), // Default language
-		(LPTSTR) &lpMsgBuf,
+		(LPTSTR)&lpMsgBuf,
 		0,
-		NULL 
+		NULL
 	);
 
 	// Display the string.
-	MessageBox( NULL, lpMsgBuf, "GetLastError", MB_OK|MB_ICONINFORMATION );
+	MessageBox(NULL, lpMsgBuf, "GetLastError", MB_OK | MB_ICONINFORMATION);
 
 	// Free the buffer.
-	LocalFree( lpMsgBuf );
+	LocalFree(lpMsgBuf);
 }
 
 //================================================================
@@ -134,20 +134,20 @@ Sys_ScanForCD
 
 ================
 */
-char *Sys_ScanForCD (void)
+char* Sys_ScanForCD(void)
 {
 	static char	cddir[MAX_OSPATH];
 	static qboolean	done;
 #ifndef DEMO
 	char		drive[4];
-	FILE		*f;
+	FILE* f;
 	char		test[MAX_QPATH];
 
 	if (done)		// don't re-check
 		return cddir;
 
 	// no abort/retry/fail errors
-	SetErrorMode (SEM_FAILCRITICALERRORS);
+	SetErrorMode(SEM_FAILCRITICALERRORS);
 
 	drive[0] = 'c';
 	drive[1] = ':';
@@ -157,23 +157,23 @@ char *Sys_ScanForCD (void)
 	done = true;
 
 	// scan the drives
-	for (drive[0] = 'c' ; drive[0] <= 'z' ; drive[0]++)
+	for (drive[0] = 'c'; drive[0] <= 'z'; drive[0]++)
 	{
 		// where activision put the stuff...
-		sprintf (cddir, "%sinstall\\data", drive);
-		sprintf (test, "%sinstall\\data\\quake2.exe", drive);
+		sprintf(cddir, "%sinstall\\data", drive);
+		sprintf(test, "%sinstall\\data\\quake2.exe", drive);
 		f = fopen(test, "r");
 		if (f)
 		{
-			fclose (f);
-			if (GetDriveType (drive) == DRIVE_CDROM)
+			fclose(f);
+			if (GetDriveType(drive) == DRIVE_CDROM)
 				return cddir;
 		}
 	}
 #endif
 
 	cddir[0] = 0;
-	
+
 	return NULL;
 }
 
@@ -183,14 +183,14 @@ Sys_CopyProtect
 
 ================
 */
-void	Sys_CopyProtect (void)
+void	Sys_CopyProtect(void)
 {
 #ifndef DEMO
-	char	*cddir;
+	char* cddir;
 
 	cddir = Sys_ScanForCD();
 	if (!cddir[0])
-		Com_Error (ERR_FATAL, "You must have the Quake2 CD in the drive to play.");
+		Com_Error(ERR_FATAL, "You must have the Quake2 CD in the drive to play.");
 #endif
 }
 
@@ -203,7 +203,7 @@ void	Sys_CopyProtect (void)
 Sys_Init
 ================
 */
-void Sys_Init (void)
+void Sys_Init(void)
 {
 	OSVERSIONINFO	vinfo;
 
@@ -212,44 +212,44 @@ void Sys_Init (void)
 	// front end can tell if it is alive
 
 	// mutex will fail if semephore already exists
-    qwclsemaphore = CreateMutex(
-        NULL,         /* Security attributes */
-        0,            /* owner       */
-        "qwcl"); /* Semaphore name      */
+	qwclsemaphore = CreateMutex(
+		NULL,         /* Security attributes */
+		0,            /* owner       */
+		"qwcl"); /* Semaphore name      */
 	if (!qwclsemaphore)
-		Sys_Error ("QWCL is already running on this system");
-	CloseHandle (qwclsemaphore);
+		Sys_Error("QWCL is already running on this system");
+	CloseHandle(qwclsemaphore);
 
-    qwclsemaphore = CreateSemaphore(
-        NULL,         /* Security attributes */
-        0,            /* Initial count       */
-        1,            /* Maximum count       */
-        "qwcl"); /* Semaphore name      */
+	qwclsemaphore = CreateSemaphore(
+		NULL,         /* Security attributes */
+		0,            /* Initial count       */
+		1,            /* Maximum count       */
+		"qwcl"); /* Semaphore name      */
 #endif
 
-	timeBeginPeriod( 1 );
+	timeBeginPeriod(1);
 
 	vinfo.dwOSVersionInfoSize = sizeof(vinfo);
 
-	if (!GetVersionEx (&vinfo))
-		Sys_Error ("Couldn't get OS info");
+	if (!GetVersionEx(&vinfo))
+		Sys_Error("Couldn't get OS info");
 
 	if (vinfo.dwMajorVersion < 4)
-		Sys_Error ("Quake2 requires windows version 4 or greater");
+		Sys_Error("Quake2 requires windows version 4 or greater");
 	if (vinfo.dwPlatformId == VER_PLATFORM_WIN32s)
-		Sys_Error ("Quake2 doesn't run on Win32s");
-	else if ( vinfo.dwPlatformId == VER_PLATFORM_WIN32_WINDOWS )
+		Sys_Error("Quake2 doesn't run on Win32s");
+	else if (vinfo.dwPlatformId == VER_PLATFORM_WIN32_WINDOWS)
 		s_win95 = true;
 
 	if (dedicated->value)
 	{
-		if (!AllocConsole ())
-			Sys_Error ("Couldn't create dedicated server console");
-		hinput = GetStdHandle (STD_INPUT_HANDLE);
-		houtput = GetStdHandle (STD_OUTPUT_HANDLE);
-	
+		if (!AllocConsole())
+			Sys_Error("Couldn't create dedicated server console");
+		hinput = GetStdHandle(STD_INPUT_HANDLE);
+		houtput = GetStdHandle(STD_OUTPUT_HANDLE);
+
 		// let QHOST hook in
-		InitConProc (argc, argv);
+		InitConProc(argc, argv);
 	}
 }
 
@@ -262,7 +262,7 @@ static int	console_textlen;
 Sys_ConsoleInput
 ================
 */
-char *Sys_ConsoleInput (void)
+char* Sys_ConsoleInput(void)
 {
 	INPUT_RECORD	recs[1024];
 	int		dummy;
@@ -272,19 +272,19 @@ char *Sys_ConsoleInput (void)
 		return NULL;
 
 
-	for ( ;; )
+	for (;; )
 	{
-		if (!GetNumberOfConsoleInputEvents (hinput, &numevents))
-			Sys_Error ("Error getting # of console events");
+		if (!GetNumberOfConsoleInputEvents(hinput, &numevents))
+			Sys_Error("Error getting # of console events");
 
 		if (numevents <= 0)
 			break;
 
 		if (!ReadConsoleInput(hinput, recs, 1, &numread))
-			Sys_Error ("Error reading console input");
+			Sys_Error("Error reading console input");
 
 		if (numread != 1)
-			Sys_Error ("Couldn't read console input");
+			Sys_Error("Couldn't read console input");
 
 		if (recs[0].EventType == KEY_EVENT)
 		{
@@ -294,37 +294,37 @@ char *Sys_ConsoleInput (void)
 
 				switch (ch)
 				{
-					case '\r':
-						WriteFile(houtput, "\r\n", 2, &dummy, NULL);	
+				case '\r':
+					WriteFile(houtput, "\r\n", 2, &dummy, NULL);
 
-						if (console_textlen)
+					if (console_textlen)
+					{
+						console_text[console_textlen] = 0;
+						console_textlen = 0;
+						return console_text;
+					}
+					break;
+
+				case '\b':
+					if (console_textlen)
+					{
+						console_textlen--;
+						WriteFile(houtput, "\b \b", 3, &dummy, NULL);
+					}
+					break;
+
+				default:
+					if (ch >= ' ')
+					{
+						if (console_textlen < sizeof(console_text) - 2)
 						{
-							console_text[console_textlen] = 0;
-							console_textlen = 0;
-							return console_text;
+							WriteFile(houtput, &ch, 1, &dummy, NULL);
+							console_text[console_textlen] = ch;
+							console_textlen++;
 						}
-						break;
+					}
 
-					case '\b':
-						if (console_textlen)
-						{
-							console_textlen--;
-							WriteFile(houtput, "\b \b", 3, &dummy, NULL);	
-						}
-						break;
-
-					default:
-						if (ch >= ' ')
-						{
-							if (console_textlen < sizeof(console_text)-2)
-							{
-								WriteFile(houtput, &ch, 1, &dummy, NULL);	
-								console_text[console_textlen] = ch;
-								console_textlen++;
-							}
-						}
-
-						break;
+					break;
 
 				}
 			}
@@ -342,7 +342,7 @@ Sys_ConsoleOutput
 Print text to the dedicated console
 ================
 */
-void Sys_ConsoleOutput (char *string)
+void Sys_ConsoleOutput(char* string)
 {
 	int		dummy;
 	char	text[256];
@@ -354,9 +354,9 @@ void Sys_ConsoleOutput (char *string)
 	{
 		text[0] = '\r';
 		memset(&text[1], ' ', console_textlen);
-		text[console_textlen+1] = '\r';
-		text[console_textlen+2] = 0;
-		WriteFile(houtput, text, console_textlen+2, &dummy, NULL);
+		text[console_textlen + 1] = '\r';
+		text[console_textlen + 2] = 0;
+		WriteFile(houtput, text, console_textlen + 2, &dummy, NULL);
 	}
 
 	WriteFile(houtput, string, strlen(string), &dummy, NULL);
@@ -373,17 +373,17 @@ Sys_SendKeyEvents
 Send Key_Event calls
 ================
 */
-void Sys_SendKeyEvents (void)
+void Sys_SendKeyEvents(void)
 {
-    MSG        msg;
+	MSG        msg;
 
-	while (PeekMessage (&msg, NULL, 0, 0, PM_NOREMOVE))
+	while (PeekMessage(&msg, NULL, 0, 0, PM_NOREMOVE))
 	{
-		if (!GetMessage (&msg, NULL, 0, 0))
-			Sys_Quit ();
+		if (!GetMessage(&msg, NULL, 0, 0))
+			Sys_Quit();
 		sys_msg_time = msg.time;
-      	TranslateMessage (&msg);
-      	DispatchMessage (&msg);
+		TranslateMessage(&msg);
+		DispatchMessage(&msg);
 	}
 
 	// grab frame time 
@@ -398,22 +398,22 @@ Sys_GetClipboardData
 
 ================
 */
-char *Sys_GetClipboardData( void )
+char* Sys_GetClipboardData(void)
 {
-	char *data = NULL;
-	char *cliptext;
+	char* data = NULL;
+	char* cliptext;
 
-	if ( OpenClipboard( NULL ) != 0 )
+	if (OpenClipboard(NULL) != 0)
 	{
 		HANDLE hClipboardData;
 
-		if ( ( hClipboardData = GetClipboardData( CF_TEXT ) ) != 0 )
+		if ((hClipboardData = GetClipboardData(CF_TEXT)) != 0)
 		{
-			if ( ( cliptext = GlobalLock( hClipboardData ) ) != 0 ) 
+			if ((cliptext = GlobalLock(hClipboardData)) != 0)
 			{
-				data = malloc( GlobalSize( hClipboardData ) + 1 );
-				strcpy( data, cliptext );
-				GlobalUnlock( hClipboardData );
+				data = malloc(GlobalSize(hClipboardData) + 1);
+				strcpy(data, cliptext);
+				GlobalUnlock(hClipboardData);
 			}
 		}
 		CloseClipboard();
@@ -434,10 +434,10 @@ char *Sys_GetClipboardData( void )
 Sys_AppActivate
 =================
 */
-void Sys_AppActivate (void)
+void Sys_AppActivate(void)
 {
-	ShowWindow ( cl_hwnd, SW_RESTORE);
-	SetForegroundWindow ( cl_hwnd );
+	ShowWindow(cl_hwnd, SW_RESTORE);
+	SetForegroundWindow(cl_hwnd);
 }
 
 /*
@@ -455,10 +455,10 @@ static HINSTANCE	game_library;
 Sys_UnloadGame
 =================
 */
-void Sys_UnloadGame (void)
+void Sys_UnloadGame(void)
 {
-	if (!FreeLibrary (game_library))
-		Com_Error (ERR_FATAL, "FreeLibrary failed for game library");
+	if (!FreeLibrary(game_library))
+		Com_Error(ERR_FATAL, "FreeLibrary failed for game library");
 	game_library = NULL;
 }
 
@@ -469,51 +469,51 @@ Sys_GetGameAPI
 Loads the game dll
 =================
 */
-void *Sys_GetGameAPI (void *parms)
+void* Sys_GetGameAPI(void* parms)
 {
-	void	*(*GetGameAPI) (void *);
+	void* (*GetGameAPI) (void*);
 	char	name[MAX_OSPATH];
-	char	*path;
+	char* path;
 	char	cwd[MAX_OSPATH];
 #if defined _M_IX86
-	const char *gamename = "gamex86.dll";
+	const char* gamename = "gamex86.dll";
 
 #ifdef NDEBUG
-	const char *debugdir = "release";
+	const char* debugdir = "release";
 #else
-	const char *debugdir = "debug";
+	const char* debugdir = "debug";
 #endif
 
 #elif defined _M_ALPHA
-	const char *gamename = "gameaxp.dll";
+	const char* gamename = "gameaxp.dll";
 
 #ifdef NDEBUG
-	const char *debugdir = "releaseaxp";
+	const char* debugdir = "releaseaxp";
 #else
-	const char *debugdir = "debugaxp";
+	const char* debugdir = "debugaxp";
 #endif
 
 #endif
 
 	if (game_library)
-		Com_Error (ERR_FATAL, "Sys_GetGameAPI without Sys_UnloadingGame");
+		Com_Error(ERR_FATAL, "Sys_GetGameAPI without Sys_UnloadingGame");
 
 	// check the current debug directory first for development purposes
-	_getcwd (cwd, sizeof(cwd));
-	Com_sprintf (name, sizeof(name), "%s/%s/%s", cwd, debugdir, gamename);
-	game_library = LoadLibrary ( name );
+	_getcwd(cwd, sizeof(cwd));
+	Com_sprintf(name, sizeof(name), "%s/%s/%s", cwd, debugdir, gamename);
+	game_library = LoadLibrary(name);
 	if (game_library)
 	{
-		Com_DPrintf ("LoadLibrary (%s)\n", name);
+		Com_DPrintf("LoadLibrary (%s)\n", name);
 	}
 	else
 	{
 		// check the current directory for other development purposes
-		Com_sprintf (name, sizeof(name), "%s/%s", cwd, gamename);
-		game_library = LoadLibrary ( name );
+		Com_sprintf(name, sizeof(name), "%s/%s", cwd, gamename);
+		game_library = LoadLibrary(name);
 		if (game_library)
 		{
-			Com_DPrintf ("LoadLibrary (%s)\n", name);
+			Com_DPrintf("LoadLibrary (%s)\n", name);
 		}
 		else
 		{
@@ -521,28 +521,28 @@ void *Sys_GetGameAPI (void *parms)
 			path = NULL;
 			while (1)
 			{
-				path = FS_NextPath (path);
+				path = FS_NextPath(path);
 				if (!path)
 					return NULL;		// couldn't find one anywhere
-				Com_sprintf (name, sizeof(name), "%s/%s", path, gamename);
-				game_library = LoadLibrary (name);
+				Com_sprintf(name, sizeof(name), "%s/%s", path, gamename);
+				game_library = LoadLibrary(name);
 				if (game_library)
 				{
-					Com_DPrintf ("LoadLibrary (%s)\n",name);
+					Com_DPrintf("LoadLibrary (%s)\n", name);
 					break;
 				}
 			}
 		}
 	}
 
-	GetGameAPI = (void *)GetProcAddress (game_library, "GetGameAPI");
+	GetGameAPI = (void*)GetProcAddress(game_library, "GetGameAPI");
 	if (!GetGameAPI)
 	{
-		Sys_UnloadGame ();		
+		Sys_UnloadGame();
 		return NULL;
 	}
 
-	return GetGameAPI (parms);
+	return GetGameAPI(parms);
 }
 
 //=======================================================================
@@ -554,7 +554,7 @@ ParseCommandLine
 
 ==================
 */
-void ParseCommandLine (LPSTR lpCmdLine)
+void ParseCommandLine(LPSTR lpCmdLine)
 {
 	argc = 1;
 	argv[0] = "exe";
@@ -577,7 +577,7 @@ void ParseCommandLine (LPSTR lpCmdLine)
 				*lpCmdLine = 0;
 				lpCmdLine++;
 			}
-			
+
 		}
 	}
 
@@ -591,28 +591,28 @@ WinMain
 */
 HINSTANCE	global_hInstance;
 
-int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
+int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
-    MSG				msg;
+	MSG				msg;
 	int				time, oldtime, newtime;
-	char			*cddir;
+	char* cddir;
 
-    /* previous instances do not exist in Win32 */
-    if (hPrevInstance)
-        return 0;
+	/* previous instances do not exist in Win32 */
+	if (hPrevInstance)
+		return 0;
 
 	global_hInstance = hInstance;
 
-	ParseCommandLine (lpCmdLine);
+	ParseCommandLine(lpCmdLine);
 
 	// if we find the CD, add a +set cddir xxx command line
-	cddir = Sys_ScanForCD ();
+	cddir = Sys_ScanForCD();
 	if (cddir && argc < MAX_NUM_ARGVS - 3)
 	{
 		int		i;
 
 		// don't override a cddir on the command line
-		for (i=0 ; i<argc ; i++)
+		for (i = 0; i < argc; i++)
 			if (!strcmp(argv[i], "cddir"))
 				break;
 		if (i == argc)
@@ -623,41 +623,41 @@ int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 		}
 	}
 
-	Qcommon_Init (argc, argv);
-	oldtime = Sys_Milliseconds ();
+	Qcommon_Init(argc, argv);
+	oldtime = Sys_Milliseconds();
 
-    /* main window message loop */
+	/* main window message loop */
 	while (1)
 	{
 		// if at a full screen console, don't update unless needed
-		if (Minimized || (dedicated && dedicated->value) )
+		if (Minimized || (dedicated && dedicated->value))
 		{
-			Sleep (1);
+			Sleep(1);
 		}
 
-		while (PeekMessage (&msg, NULL, 0, 0, PM_NOREMOVE))
+		while (PeekMessage(&msg, NULL, 0, 0, PM_NOREMOVE))
 		{
-			if (!GetMessage (&msg, NULL, 0, 0))
-				Com_Quit ();
+			if (!GetMessage(&msg, NULL, 0, 0))
+				Com_Quit();
 			sys_msg_time = msg.time;
-			TranslateMessage (&msg);
-   			DispatchMessage (&msg);
+			TranslateMessage(&msg);
+			DispatchMessage(&msg);
 		}
 
 		do
 		{
-			newtime = Sys_Milliseconds ();
+			newtime = Sys_Milliseconds();
 			time = newtime - oldtime;
 		} while (time < 1);
-//			Con_Printf ("time:%5.2f - %5.2f = %5.2f\n", newtime, oldtime, time);
+		//			Con_Printf ("time:%5.2f - %5.2f = %5.2f\n", newtime, oldtime, time);
 
-		//	_controlfp( ~( _EM_ZERODIVIDE /*| _EM_INVALID*/ ), _MCW_EM );
-		_controlfp( _PC_24, _MCW_PC );
-		Qcommon_Frame (time);
+				//	_controlfp( ~( _EM_ZERODIVIDE /*| _EM_INVALID*/ ), _MCW_EM );
+		_controlfp(_PC_24, _MCW_PC);
+		Qcommon_Frame(time);
 
 		oldtime = newtime;
 	}
 
 	// never gets here
-    return TRUE;
+	return TRUE;
 }

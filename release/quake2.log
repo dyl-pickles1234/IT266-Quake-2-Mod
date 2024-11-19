@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿  cd_win.c
   cl_cin.c
   cl_ents.c
@@ -563,3 +564,7 @@ C:\school_dev\IT266\IT266-Quake-2-Mod\win32\vid_menu.c(199,34): warning C4100: '
   x86.c
   Generating Code...
   quake2.vcxproj -> C:\school_dev\IT266\IT266-Quake-2-Mod\release\quake2.exe
+=======
+﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(531,5): warning MSB8028: The intermediate directory (.\release\) contains files shared from another project (ref_soft.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+  quake2.vcxproj -> C:\school_dev\Game_Modding\IT266-Quake-2-Mod\release\quake2.exe
+>>>>>>> d41139d0dcbe32786ba5f8ad06f21d516c0ef447

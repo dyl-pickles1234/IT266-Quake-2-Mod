@@ -8,7 +8,7 @@ of the License, or (at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 See the GNU General Public License for more details.
 
@@ -64,10 +64,10 @@ typedef struct ghost_s {
 	int code; // ghost code
 	int team; // team
 	int score; // frags at time of disconnect
-	edict_t *ent;
+	edict_t* ent;
 } ghost_t;
 
-extern cvar_t *ctf;
+extern cvar_t* ctf;
 
 #define CTF_TEAM1_SKIN "ctf_r"
 #define CTF_TEAM2_SKIN "ctf_b"
@@ -106,80 +106,80 @@ extern cvar_t *ctf;
 void CTFInit(void);
 void CTFSpawn(void);
 
-void SP_info_player_team1(edict_t *self);
-void SP_info_player_team2(edict_t *self);
+void SP_info_player_team1(edict_t* self);
+void SP_info_player_team2(edict_t* self);
 
-char *CTFTeamName(int team);
-char *CTFOtherTeamName(int team);
-void CTFAssignSkin(edict_t *ent, char *s);
-void CTFAssignTeam(gclient_t *who);
-edict_t *SelectCTFSpawnPoint (edict_t *ent);
-qboolean CTFPickup_Flag(edict_t *ent, edict_t *other);
-qboolean CTFDrop_Flag(edict_t *ent, gitem_t *item);
-void CTFEffects(edict_t *player);
+char* CTFTeamName(int team);
+char* CTFOtherTeamName(int team);
+void CTFAssignSkin(edict_t* ent, char* s);
+void CTFAssignTeam(gclient_t* who);
+edict_t* SelectCTFSpawnPoint(edict_t* ent);
+qboolean CTFPickup_Flag(edict_t* ent, edict_t* other);
+qboolean CTFDrop_Flag(edict_t* ent, gitem_t* item);
+void CTFEffects(edict_t* player);
 void CTFCalcScores(void);
-void SetCTFStats(edict_t *ent);
-void CTFDeadDropFlag(edict_t *self);
-void CTFScoreboardMessage (edict_t *ent, edict_t *killer);
-void CTFTeam_f (edict_t *ent);
-void CTFID_f (edict_t *ent);
-void CTFSay_Team(edict_t *who, char *msg);
-void CTFFlagSetup (edict_t *ent);
+void SetCTFStats(edict_t* ent);
+void CTFDeadDropFlag(edict_t* self);
+void CTFScoreboardMessage(edict_t* ent, edict_t* killer);
+void CTFTeam_f(edict_t* ent);
+void CTFID_f(edict_t* ent);
+void CTFSay_Team(edict_t* who, char* msg);
+void CTFFlagSetup(edict_t* ent);
 void CTFResetFlag(int ctf_team);
-void CTFFragBonuses(edict_t *targ, edict_t *inflictor, edict_t *attacker);
-void CTFCheckHurtCarrier(edict_t *targ, edict_t *attacker);
+void CTFFragBonuses(edict_t* targ, edict_t* inflictor, edict_t* attacker);
+void CTFCheckHurtCarrier(edict_t* targ, edict_t* attacker);
 
 // GRAPPLE
-void CTFWeapon_Grapple (edict_t *ent);
-void CTFPlayerResetGrapple(edict_t *ent);
-void CTFGrapplePull(edict_t *self);
-void CTFResetGrapple(edict_t *self);
+void CTFWeapon_Grapple(edict_t* ent);
+void CTFPlayerResetGrapple(edict_t* ent);
+void CTFGrapplePull(edict_t* self);
+void CTFResetGrapple(edict_t* self);
 
 //TECH
-gitem_t *CTFWhat_Tech(edict_t *ent);
-qboolean CTFPickup_Tech (edict_t *ent, edict_t *other);
-void CTFDrop_Tech(edict_t *ent, gitem_t *item);
-void CTFDeadDropTech(edict_t *ent);
+gitem_t* CTFWhat_Tech(edict_t* ent);
+qboolean CTFPickup_Tech(edict_t* ent, edict_t* other);
+void CTFDrop_Tech(edict_t* ent, gitem_t* item);
+void CTFDeadDropTech(edict_t* ent);
 void CTFSetupTechSpawn(void);
-int CTFApplyResistance(edict_t *ent, int dmg);
-int CTFApplyStrength(edict_t *ent, int dmg);
-qboolean CTFApplyStrengthSound(edict_t *ent);
-qboolean CTFApplyHaste(edict_t *ent);
-void CTFApplyHasteSound(edict_t *ent);
-void CTFApplyRegeneration(edict_t *ent);
-qboolean CTFHasRegeneration(edict_t *ent);
-void CTFRespawnTech(edict_t *ent);
+int CTFApplyResistance(edict_t* ent, int dmg);
+int CTFApplyStrength(edict_t* ent, int dmg);
+qboolean CTFApplyStrengthSound(edict_t* ent);
+qboolean CTFApplyHaste(edict_t* ent);
+void CTFApplyHasteSound(edict_t* ent);
+void CTFApplyRegeneration(edict_t* ent);
+qboolean CTFHasRegeneration(edict_t* ent);
+void CTFRespawnTech(edict_t* ent);
 void CTFResetTech(void);
 
-void CTFOpenJoinMenu(edict_t *ent);
-qboolean CTFStartClient(edict_t *ent);
-void CTFVoteYes(edict_t *ent);
-void CTFVoteNo(edict_t *ent);
-void CTFReady(edict_t *ent);
-void CTFNotReady(edict_t *ent);
+void CTFOpenJoinMenu(edict_t* ent);
+qboolean CTFStartClient(edict_t* ent);
+void CTFVoteYes(edict_t* ent);
+void CTFVoteNo(edict_t* ent);
+void CTFReady(edict_t* ent);
+void CTFNotReady(edict_t* ent);
 qboolean CTFNextMap(void);
 qboolean CTFMatchSetup(void);
 qboolean CTFMatchOn(void);
-void CTFGhost(edict_t *ent);
-void CTFAdmin(edict_t *ent);
+void CTFGhost(edict_t* ent);
+void CTFAdmin(edict_t* ent);
 qboolean CTFInMatch(void);
-void CTFStats(edict_t *ent);
-void CTFWarp(edict_t *ent);
-void CTFBoot(edict_t *ent);
-void CTFPlayerList(edict_t *ent);
+void CTFStats(edict_t* ent);
+void CTFWarp(edict_t* ent);
+void CTFBoot(edict_t* ent);
+void CTFPlayerList(edict_t* ent);
 
 qboolean CTFCheckRules(void);
 
-void SP_misc_ctf_banner (edict_t *ent);
-void SP_misc_ctf_small_banner (edict_t *ent);
+void SP_misc_ctf_banner(edict_t* ent);
+void SP_misc_ctf_small_banner(edict_t* ent);
 
-extern char *ctf_statusbar;
+extern char* ctf_statusbar;
 
-void UpdateChaseCam(edict_t *ent);
-void ChaseNext(edict_t *ent);
-void ChasePrev(edict_t *ent);
+void UpdateChaseCam(edict_t* ent);
+void ChaseNext(edict_t* ent);
+void ChasePrev(edict_t* ent);
 
-void CTFObserver(edict_t *ent);
+void CTFObserver(edict_t* ent);
 
-void SP_trigger_teleport (edict_t *ent);
-void SP_info_teleport_destination (edict_t *ent);
+void SP_trigger_teleport(edict_t* ent);
+void SP_info_teleport_destination(edict_t* ent);

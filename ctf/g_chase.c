@@ -8,7 +8,7 @@ of the License, or (at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 See the GNU General Public License for more details.
 
@@ -20,10 +20,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "g_local.h"
 
 
-void UpdateChaseCam(edict_t *ent)
+void UpdateChaseCam(edict_t* ent)
 {
 	vec3_t o, ownerv, goal;
-	edict_t *targ;
+	edict_t* targ;
 	vec3_t forward, right;
 	trace_t trace;
 	int i;
@@ -46,7 +46,7 @@ void UpdateChaseCam(edict_t *ent)
 	VectorCopy(targ->client->v_angle, angles);
 	if (angles[PITCH] > 56)
 		angles[PITCH] = 56;
-	AngleVectors (angles, forward, right, NULL);
+	AngleVectors(angles, forward, right, NULL);
 	VectorNormalize(forward);
 	VectorMA(ownerv, -30, forward, o);
 
@@ -83,7 +83,7 @@ void UpdateChaseCam(edict_t *ent)
 	ent->client->ps.pmove.pm_type = PM_FREEZE;
 
 	VectorCopy(goal, ent->s.origin);
-	for (i=0 ; i<3 ; i++)
+	for (i = 0; i < 3; i++)
 		ent->client->ps.pmove.delta_angles[i] = ANGLE2SHORT(targ->client->v_angle[i] - ent->client->resp.cmd_angles[i]);
 
 	VectorCopy(targ->client->v_angle, ent->client->ps.viewangles);
@@ -101,17 +101,17 @@ void UpdateChaseCam(edict_t *ent)
 		ent->client->update_chase = false;
 		sprintf(s, "xv 0 yb -68 string2 \"Chasing %s\"",
 			targ->client->pers.netname);
-		gi.WriteByte (svc_layout);
-		gi.WriteString (s);
+		gi.WriteByte(svc_layout);
+		gi.WriteString(s);
 		gi.unicast(ent, false);
 	}
 
 }
 
-void ChaseNext(edict_t *ent)
+void ChaseNext(edict_t* ent)
 {
 	int i;
-	edict_t *e;
+	edict_t* e;
 
 	if (!ent->client->chase_target)
 		return;
@@ -132,10 +132,10 @@ void ChaseNext(edict_t *ent)
 	ent->client->update_chase = true;
 }
 
-void ChasePrev(edict_t *ent)
+void ChasePrev(edict_t* ent)
 {
 	int i;
-	edict_t *e;
+	edict_t* e;
 
 	if (!ent->client->chase_target)
 		return;

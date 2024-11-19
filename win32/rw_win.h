@@ -8,7 +8,7 @@ of the License, or (at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 See the GNU General Public License for more details.
 
@@ -26,13 +26,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 typedef struct
 {
 	HINSTANCE		hInstance;
-	void			*wndproc;
+	void* wndproc;
 	HDC				hDC;				// global DC we're using
 	HWND			hWnd;				// HWND of parent window
 
 	HDC				hdcDIBSection;		// DC compatible with DIB section
 	HBITMAP			hDIBSection;		// DIB section
-	unsigned char	*pDIBBase;			// DIB base pointer, NOT used directly for rendering!
+	unsigned char* pDIBBase;			// DIB base pointer, NOT used directly for rendering!
 
 	HPALETTE		hPal;				// palette we're using
 	HPALETTE		hpalOld;			// original system palette
@@ -57,12 +57,12 @@ extern swwstate_t sww_state;
 /*
 ** DIB code
 */
-qboolean DIB_Init( unsigned char **ppbuffer, int *ppitch );
-void     DIB_Shutdown( void );
-void     DIB_SetPalette( const unsigned char *palette );
+qboolean DIB_Init(unsigned char** ppbuffer, int* ppitch);
+void     DIB_Shutdown(void);
+void     DIB_SetPalette(const unsigned char* palette);
 
-qboolean DDRAW_Init( unsigned char **ppbuffer, int *ppitch );
-void     DDRAW_Shutdown( void );
-void     DDRAW_SetPalette( const unsigned char *palette );
+qboolean DDRAW_Init(unsigned char** ppbuffer, int* ppitch);
+void     DDRAW_Shutdown(void);
+void     DDRAW_SetPalette(const unsigned char* palette);
 
 #endif

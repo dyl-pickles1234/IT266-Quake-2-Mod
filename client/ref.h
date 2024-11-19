@@ -8,7 +8,7 @@ of the License, or (at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 See the GNU General Public License for more details.
 
@@ -46,7 +46,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 typedef struct entity_s
 {
-	struct model_s		*model;			// opaque type outside refresh
+	struct model_s* model;			// opaque type outside refresh
 	float				angles[3];
 
 	/*
@@ -70,7 +70,7 @@ typedef struct entity_s
 	int		lightstyle;				// for flashing entities
 	float	alpha;					// ignore if RF_TRANSLUCENT isn't set
 
-	struct image_s	*skin;			// NULL for inline skin
+	struct image_s* skin;			// NULL for inline skin
 	int		flags;
 
 } entity_t;
@@ -107,18 +107,18 @@ typedef struct
 	float		time;				// time is uesed to auto animate
 	int			rdflags;			// RDF_UNDERWATER, etc
 
-	byte		*areabits;			// if not NULL, only areas with set bits will be drawn
+	byte* areabits;			// if not NULL, only areas with set bits will be drawn
 
-	lightstyle_t	*lightstyles;	// [MAX_LIGHTSTYLES]
+	lightstyle_t* lightstyles;	// [MAX_LIGHTSTYLES]
 
 	int			num_entities;
-	entity_t	*entities;
+	entity_t* entities;
 
 	int			num_dlights;
-	dlight_t	*dlights;
+	dlight_t* dlights;
 
 	int			num_particles;
-	particle_t	*particles;
+	particle_t* particles;
 } refdef_t;
 
 
@@ -134,7 +134,7 @@ typedef struct
 	int		api_version;
 
 	// called when the library is loaded
-	qboolean	(*Init) ( void *hinstance, void *wndproc );
+	qboolean(*Init) (void* hinstance, void* wndproc);
 
 	// called before the library is unloaded
 	void	(*Shutdown) (void);
@@ -152,34 +152,34 @@ typedef struct
 	// are flood filled to eliminate mip map edge errors, and pics have
 	// an implicit "pics/" prepended to the name. (a pic name that starts with a
 	// slash will not use the "pics/" prefix or the ".pcx" postfix)
-	void	(*BeginRegistration) (char *map);
-	struct model_s *(*RegisterModel) (char *name);
-	struct image_s *(*RegisterSkin) (char *name);
-	struct image_s *(*RegisterPic) (char *name);
-	void	(*SetSky) (char *name, float rotate, vec3_t axis);
+	void	(*BeginRegistration) (char* map);
+	struct model_s* (*RegisterModel) (char* name);
+	struct image_s* (*RegisterSkin) (char* name);
+	struct image_s* (*RegisterPic) (char* name);
+	void	(*SetSky) (char* name, float rotate, vec3_t axis);
 	void	(*EndRegistration) (void);
 
-	void	(*RenderFrame) (refdef_t *fd);
+	void	(*RenderFrame) (refdef_t* fd);
 
-	void	(*DrawGetPicSize) (int *w, int *h, char *name);	// will return 0 0 if not found
-	void	(*DrawPic) (int x, int y, char *name);
-	void	(*DrawStretchPic) (int x, int y, int w, int h, char *name);
+	void	(*DrawGetPicSize) (int* w, int* h, char* name);	// will return 0 0 if not found
+	void	(*DrawPic) (int x, int y, char* name);
+	void	(*DrawStretchPic) (int x, int y, int w, int h, char* name);
 	void	(*DrawChar) (int x, int y, int c);
-	void	(*DrawTileClear) (int x, int y, int w, int h, char *name);
+	void	(*DrawTileClear) (int x, int y, int w, int h, char* name);
 	void	(*DrawFill) (int x, int y, int w, int h, int c);
 	void	(*DrawFadeScreen) (void);
 
 	// Draw images for cinematic rendering (which can have a different palette). Note that calls
-	void	(*DrawStretchRaw) (int x, int y, int w, int h, int cols, int rows, byte *data);
+	void	(*DrawStretchRaw) (int x, int y, int w, int h, int cols, int rows, byte* data);
 
 	/*
 	** video mode and refresh state management entry points
 	*/
-	void	(*CinematicSetPalette)( const unsigned char *palette);	// NULL = game palette
-	void	(*BeginFrame)( float camera_separation );
+	void	(*CinematicSetPalette)(const unsigned char* palette);	// NULL = game palette
+	void	(*BeginFrame)(float camera_separation);
 	void	(*EndFrame) (void);
 
-	void	(*AppActivate)( qboolean activate );
+	void	(*AppActivate)(qboolean activate);
 
 } refexport_t;
 
@@ -188,37 +188,37 @@ typedef struct
 //
 typedef struct
 {
-	void	(*Sys_Error) (int err_level, char *str, ...);
+	void	(*Sys_Error) (int err_level, char* str, ...);
 
-	void	(*Cmd_AddCommand) (char *name, void(*cmd)(void));
-	void	(*Cmd_RemoveCommand) (char *name);
+	void	(*Cmd_AddCommand) (char* name, void(*cmd)(void));
+	void	(*Cmd_RemoveCommand) (char* name);
 	int		(*Cmd_Argc) (void);
-	char	*(*Cmd_Argv) (int i);
-	void	(*Cmd_ExecuteText) (int exec_when, char *text);
+	char* (*Cmd_Argv) (int i);
+	void	(*Cmd_ExecuteText) (int exec_when, char* text);
 
-	void	(*Con_Printf) (int print_level, char *str, ...);
+	void	(*Con_Printf) (int print_level, char* str, ...);
 
 	// files will be memory mapped read only
 	// the returned buffer may be part of a larger pak file,
 	// or a discrete file from anywhere in the quake search path
 	// a -1 return means the file does not exist
 	// NULL can be passed for buf to just determine existance
-	int		(*FS_LoadFile) (char *name, void **buf);
-	void	(*FS_FreeFile) (void *buf);
+	int		(*FS_LoadFile) (char* name, void** buf);
+	void	(*FS_FreeFile) (void* buf);
 
 	// gamedir will be the current directory that generated
 	// files should be stored to, ie: "f:\quake\id1"
-	char	*(*FS_Gamedir) (void);
+	char* (*FS_Gamedir) (void);
 
-	cvar_t	*(*Cvar_Get) (char *name, char *value, int flags);
-	cvar_t	*(*Cvar_Set)( char *name, char *value );
-	void	 (*Cvar_SetValue)( char *name, float value );
+	cvar_t* (*Cvar_Get) (char* name, char* value, int flags);
+	cvar_t* (*Cvar_Set)(char* name, char* value);
+	void	 (*Cvar_SetValue)(char* name, float value);
 
-	qboolean	(*Vid_GetModeInfo)( int *width, int *height, int mode );
-	void		(*Vid_MenuInit)( void );
-	void		(*Vid_NewWindow)( int width, int height );
+	qboolean(*Vid_GetModeInfo)(int* width, int* height, int mode);
+	void		(*Vid_MenuInit)(void);
+	void		(*Vid_NewWindow)(int width, int height);
 } refimport_t;
 
 
 // this is the only function actually exported at the linker level
-typedef	refexport_t	(*GetRefAPI_t) (refimport_t);
+typedef	refexport_t(*GetRefAPI_t) (refimport_t);
