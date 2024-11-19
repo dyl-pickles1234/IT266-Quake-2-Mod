@@ -2,6 +2,7 @@
   gl_image.c
   gl_light.c
 C:\school_dev\IT266\IT266-Quake-2-Mod\ref_gl\gl_image.c(118,12): warning C4389: '!=': signed/unsigned mismatch
+  gl_mesh.c
 C:\school_dev\IT266\IT266-Quake-2-Mod\ref_gl\gl_image.c(1254,2): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
 C:\school_dev\IT266\IT266-Quake-2-Mod\ref_gl\gl_image.c(1269,8): warning C4456: declaration of 'i' hides previous local declaration
   C:\school_dev\IT266\IT266-Quake-2-Mod\ref_gl\gl_image.c(1236,8):
@@ -9,7 +10,6 @@ C:\school_dev\IT266\IT266-Quake-2-Mod\ref_gl\gl_image.c(1269,8): warning C4456: 
   
 C:\school_dev\IT266\IT266-Quake-2-Mod\ref_gl\gl_image.c(1446,25): warning C4057: 'function': 'const GLuint *' differs in indirection to slightly different base types from 'int *'
 C:\school_dev\IT266\IT266-Quake-2-Mod\ref_gl\gl_image.c(1567,25): warning C4057: 'function': 'const GLuint *' differs in indirection to slightly different base types from 'int *'
-  gl_mesh.c
 C:\school_dev\IT266\IT266-Quake-2-Mod\ref_gl\gl_mesh.c(177,11): warning C4456: declaration of 'l' hides previous local declaration
   C:\school_dev\IT266\IT266-Quake-2-Mod\ref_gl\gl_mesh.c(92,9):
   see declaration of 'l'

@@ -1,13 +1,15 @@
-﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppClean.targets(77,5): warning : The process cannot access the file 'c:\school_dev\it266\it266-quake-2-mod\release\r_spr8.obj' because it is being used by another process.
-  cd_win.c
+﻿  cd_win.c
   cl_cin.c
+  cl_ents.c
+  cl_fx.c
+  cl_input.c
+  cl_inv.c
+  cl_main.c
 C:\school_dev\IT266\IT266-Quake-2-Mod\win32\cd_win.c(377,13): warning C4389: '!=': signed/unsigned mismatch
 C:\school_dev\IT266\IT266-Quake-2-Mod\win32\cd_win.c(375,45): warning C4100: 'uMsg': unreferenced formal parameter
 C:\school_dev\IT266\IT266-Quake-2-Mod\win32\cd_win.c(375,34): warning C4100: 'hWnd': unreferenced formal parameter
 C:\school_dev\IT266\IT266-Quake-2-Mod\client\cl_cin.c(557,28): warning C4057: 'function': 'const unsigned char *' differs in indirection to slightly different base types from 'char [768]'
-  cl_ents.c
 C:\school_dev\IT266\IT266-Quake-2-Mod\client\cl_ents.c(415,32): warning C4057: 'function': 'unsigned int *' differs in indirection to slightly different base types from 'int *'
-  cl_fx.c
 C:\school_dev\IT266\IT266-Quake-2-Mod\client\cl_ents.c(797,4): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
 C:\school_dev\IT266\IT266-Quake-2-Mod\client\cl_ents.c(805,3): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
 C:\school_dev\IT266\IT266-Quake-2-Mod\client\cl_fx.c(2044,11): warning C4456: declaration of 'j' hides previous local declaration
@@ -18,9 +20,6 @@ C:\school_dev\IT266\IT266-Quake-2-Mod\client\cl_fx.c(2045,15): warning C4456: de
   C:\school_dev\IT266\IT266-Quake-2-Mod\client\cl_fx.c(1997,15):
   see declaration of 'p'
   
-  cl_input.c
-  cl_inv.c
-  cl_main.c
 C:\school_dev\IT266\IT266-Quake-2-Mod\client\cl_main.c(162,7): warning C4459: declaration of 'name' hides global declaration
   C:\school_dev\IT266\IT266-Quake-2-Mod\client\cl_main.c(79,9):
   see declaration of 'name'
@@ -193,8 +192,8 @@ C:\school_dev\IT266\IT266-Quake-2-Mod\client\cl_input.c(479,1): warning C4700: u
 C:\school_dev\IT266\IT266-Quake-2-Mod\client\cl_fx.c(2228,1): warning C4701: potentially uninitialized local variable 'time' used
 C:\school_dev\IT266\IT266-Quake-2-Mod\client\cl_ents.c(494,1): warning C4701: potentially uninitialized local variable 'oldstate' used
 C:\school_dev\IT266\IT266-Quake-2-Mod\client\cl_ents.c(494,1): warning C4703: potentially uninitialized local pointer variable 'oldstate' used
-C:\school_dev\IT266\IT266-Quake-2-Mod\win32\cd_win.c(53,1): warning C4706: assignment within conditional expression
 C:\school_dev\IT266\IT266-Quake-2-Mod\win32\cd_win.c(62,1): warning C4706: assignment within conditional expression
+C:\school_dev\IT266\IT266-Quake-2-Mod\win32\cd_win.c(53,1): warning C4706: assignment within conditional expression
 C:\school_dev\IT266\IT266-Quake-2-Mod\win32\cd_win.c(202,1): warning C4706: assignment within conditional expression
 C:\school_dev\IT266\IT266-Quake-2-Mod\win32\cd_win.c(222,1): warning C4706: assignment within conditional expression
 C:\school_dev\IT266\IT266-Quake-2-Mod\win32\cd_win.c(449,1): warning C4706: assignment within conditional expression

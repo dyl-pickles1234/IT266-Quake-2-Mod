@@ -1,7 +1,8 @@
 ﻿  g_ai.c
-C:\school_dev\IT266\IT266-Quake-2-Mod\ctf\g_ai.c(771,47): warning C4100: 'dist': unreferenced formal parameter
   g_chase.c
   g_cmds.c
+C:\school_dev\IT266\IT266-Quake-2-Mod\ctf\g_ai.c(771,47): warning C4100: 'dist': unreferenced formal parameter
+  g_combat.c
 C:\school_dev\IT266\IT266-Quake-2-Mod\ctf\g_chase.c(102,3): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
 C:\school_dev\IT266\IT266-Quake-2-Mod\ctf\g_cmds.c(34,2): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
 C:\school_dev\IT266\IT266-Quake-2-Mod\ctf\g_cmds.c(57,2): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
@@ -13,7 +14,6 @@ C:\school_dev\IT266\IT266-Quake-2-Mod\ctf\g_cmds.c(906,3): warning C4996: 'strca
 C:\school_dev\IT266\IT266-Quake-2-Mod\ctf\g_cmds.c(907,3): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
 C:\school_dev\IT266\IT266-Quake-2-Mod\ctf\g_cmds.c(918,3): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
 C:\school_dev\IT266\IT266-Quake-2-Mod\ctf\g_cmds.c(925,2): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  g_combat.c
   g_ctf.c
 C:\school_dev\IT266\IT266-Quake-2-Mod\ctf\g_ctf.c(377,3): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
 C:\school_dev\IT266\IT266-Quake-2-Mod\ctf\g_ctf.c(519,45): warning C4100: 'inflictor': unreferenced formal parameter

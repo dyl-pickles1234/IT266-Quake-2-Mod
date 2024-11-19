@@ -77,6 +77,7 @@ C:\school_dev\IT266\IT266-Quake-2-Mod\game\q_shared.c(841,7): warning C4459: dec
   C:\school_dev\IT266\IT266-Quake-2-Mod\game\q_shared.c(305,7):
   see declaration of 'i'
   
+  q_shwin.c
 C:\school_dev\IT266\IT266-Quake-2-Mod\game\q_shared.c(876,3): warning C4996: 'strncpy': This function or variable may be unsafe. Consider using strncpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
 C:\school_dev\IT266\IT266-Quake-2-Mod\game\q_shared.c(897,2): warning C4996: 'strncpy': This function or variable may be unsafe. Consider using strncpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
 C:\school_dev\IT266\IT266-Quake-2-Mod\game\q_shared.c(923,2): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
@@ -88,7 +89,6 @@ C:\school_dev\IT266\IT266-Quake-2-Mod\game\q_shared.c(1163,7): warning C4459: de
 C:\school_dev\IT266\IT266-Quake-2-Mod\game\q_shared.c(1230,8): warning C4996: 'vsprintf': This function or variable may be unsafe. Consider using vsprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
 C:\school_dev\IT266\IT266-Quake-2-Mod\game\q_shared.c(1234,2): warning C4996: 'strncpy': This function or variable may be unsafe. Consider using strncpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
 C:\school_dev\IT266\IT266-Quake-2-Mod\game\q_shared.c(1334,4): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  q_shwin.c
   r_aclip.c
   r_alias.c
 C:\school_dev\IT266\IT266-Quake-2-Mod\ref_soft\r_alias.c(108,16): warning C4189: 'minz': local variable is initialized but not referenced
