@@ -1,0 +1,234 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="q_shared.c" />
+    <ClCompile Include="m_actor.c">
+      <Filter>monster</Filter>
+    </ClCompile>
+    <ClCompile Include="m_berserk.c">
+      <Filter>monster</Filter>
+    </ClCompile>
+    <ClCompile Include="m_boss2.c">
+      <Filter>monster</Filter>
+    </ClCompile>
+    <ClCompile Include="m_boss3.c">
+      <Filter>monster</Filter>
+    </ClCompile>
+    <ClCompile Include="m_boss31.c">
+      <Filter>monster</Filter>
+    </ClCompile>
+    <ClCompile Include="m_boss32.c">
+      <Filter>monster</Filter>
+    </ClCompile>
+    <ClCompile Include="m_brain.c">
+      <Filter>monster</Filter>
+    </ClCompile>
+    <ClCompile Include="m_chick.c">
+      <Filter>monster</Filter>
+    </ClCompile>
+    <ClCompile Include="m_flash.c">
+      <Filter>monster</Filter>
+    </ClCompile>
+    <ClCompile Include="m_flipper.c">
+      <Filter>monster</Filter>
+    </ClCompile>
+    <ClCompile Include="m_float.c">
+      <Filter>monster</Filter>
+    </ClCompile>
+    <ClCompile Include="m_flyer.c">
+      <Filter>monster</Filter>
+    </ClCompile>
+    <ClCompile Include="m_gladiator.c">
+      <Filter>monster</Filter>
+    </ClCompile>
+    <ClCompile Include="m_gunner.c">
+      <Filter>monster</Filter>
+    </ClCompile>
+    <ClCompile Include="m_hover.c">
+      <Filter>monster</Filter>
+    </ClCompile>
+    <ClCompile Include="m_infantry.c">
+      <Filter>monster</Filter>
+    </ClCompile>
+    <ClCompile Include="m_insane.c">
+      <Filter>monster</Filter>
+    </ClCompile>
+    <ClCompile Include="m_medic.c">
+      <Filter>monster</Filter>
+    </ClCompile>
+    <ClCompile Include="m_move.c">
+      <Filter>monster</Filter>
+    </ClCompile>
+    <ClCompile Include="m_mutant.c">
+      <Filter>monster</Filter>
+    </ClCompile>
+    <ClCompile Include="m_parasite.c">
+      <Filter>monster</Filter>
+    </ClCompile>
+    <ClCompile Include="m_soldier.c">
+      <Filter>monster</Filter>
+    </ClCompile>
+    <ClCompile Include="m_supertank.c">
+      <Filter>monster</Filter>
+    </ClCompile>
+    <ClCompile Include="m_tank.c">
+      <Filter>monster</Filter>
+    </ClCompile>
+    <ClCompile Include="g_ai.c">
+      <Filter>game</Filter>
+    </ClCompile>
+    <ClCompile Include="g_chase.c">
+      <Filter>game</Filter>
+    </ClCompile>
+    <ClCompile Include="g_cmds.c">
+      <Filter>game</Filter>
+    </ClCompile>
+    <ClCompile Include="g_combat.c">
+      <Filter>game</Filter>
+    </ClCompile>
+    <ClCompile Include="g_func.c">
+      <Filter>game</Filter>
+    </ClCompile>
+    <ClCompile Include="g_items.c">
+      <Filter>game</Filter>
+    </ClCompile>
+    <ClCompile Include="g_main.c">
+      <Filter>game</Filter>
+    </ClCompile>
+    <ClCompile Include="g_misc.c">
+      <Filter>game</Filter>
+    </ClCompile>
+    <ClCompile Include="g_monster.c">
+      <Filter>game</Filter>
+    </ClCompile>
+    <ClCompile Include="g_phys.c">
+      <Filter>game</Filter>
+    </ClCompile>
+    <ClCompile Include="g_save.c">
+      <Filter>game</Filter>
+    </ClCompile>
+    <ClCompile Include="g_spawn.c">
+      <Filter>game</Filter>
+    </ClCompile>
+    <ClCompile Include="g_svcmds.c">
+      <Filter>game</Filter>
+    </ClCompile>
+    <ClCompile Include="g_target.c">
+      <Filter>game</Filter>
+    </ClCompile>
+    <ClCompile Include="g_trigger.c">
+      <Filter>game</Filter>
+    </ClCompile>
+    <ClCompile Include="g_turret.c">
+      <Filter>game</Filter>
+    </ClCompile>
+    <ClCompile Include="g_utils.c">
+      <Filter>game</Filter>
+    </ClCompile>
+    <ClCompile Include="g_weapon.c">
+      <Filter>game</Filter>
+    </ClCompile>
+    <ClCompile Include="p_client.c">
+      <Filter>player</Filter>
+    </ClCompile>
+    <ClCompile Include="p_hud.c">
+      <Filter>player</Filter>
+    </ClCompile>
+    <ClCompile Include="p_trail.c">
+      <Filter>player</Filter>
+    </ClCompile>
+    <ClCompile Include="p_view.c">
+      <Filter>player</Filter>
+    </ClCompile>
+    <ClCompile Include="p_weapon.c">
+      <Filter>player</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="game.h" />
+    <ClInclude Include="q_shared.h" />
+    <ClInclude Include="m_actor.h">
+      <Filter>monster</Filter>
+    </ClInclude>
+    <ClInclude Include="m_berserk.h">
+      <Filter>monster</Filter>
+    </ClInclude>
+    <ClInclude Include="m_boss2.h">
+      <Filter>monster</Filter>
+    </ClInclude>
+    <ClInclude Include="m_boss31.h">
+      <Filter>monster</Filter>
+    </ClInclude>
+    <ClInclude Include="m_boss32.h">
+      <Filter>monster</Filter>
+    </ClInclude>
+    <ClInclude Include="m_brain.h">
+      <Filter>monster</Filter>
+    </ClInclude>
+    <ClInclude Include="m_chick.h">
+      <Filter>monster</Filter>
+    </ClInclude>
+    <ClInclude Include="m_flipper.h">
+      <Filter>monster</Filter>
+    </ClInclude>
+    <ClInclude Include="m_float.h">
+      <Filter>monster</Filter>
+    </ClInclude>
+    <ClInclude Include="m_flyer.h">
+      <Filter>monster</Filter>
+    </ClInclude>
+    <ClInclude Include="m_gladiator.h">
+      <Filter>monster</Filter>
+    </ClInclude>
+    <ClInclude Include="m_gunner.h">
+      <Filter>monster</Filter>
+    </ClInclude>
+    <ClInclude Include="m_hover.h">
+      <Filter>monster</Filter>
+    </ClInclude>
+    <ClInclude Include="m_infantry.h">
+      <Filter>monster</Filter>
+    </ClInclude>
+    <ClInclude Include="m_insane.h">
+      <Filter>monster</Filter>
+    </ClInclude>
+    <ClInclude Include="m_medic.h">
+      <Filter>monster</Filter>
+    </ClInclude>
+    <ClInclude Include="m_mutant.h">
+      <Filter>monster</Filter>
+    </ClInclude>
+    <ClInclude Include="m_parasite.h">
+      <Filter>monster</Filter>
+    </ClInclude>
+    <ClInclude Include="m_player.h">
+      <Filter>monster</Filter>
+    </ClInclude>
+    <ClInclude Include="m_soldier.h">
+      <Filter>monster</Filter>
+    </ClInclude>
+    <ClInclude Include="m_supertank.h">
+      <Filter>monster</Filter>
+    </ClInclude>
+    <ClInclude Include="m_tank.h">
+      <Filter>monster</Filter>
+    </ClInclude>
+    <ClInclude Include="g_local.h">
+      <Filter>game</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="game.def" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="monster">
+      <UniqueIdentifier>{f1be11ae-b4bb-42ef-bf59-d755910804b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game">
+      <UniqueIdentifier>{46ee54c3-90d9-4ba2-9869-15952c108c47}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="player">
+      <UniqueIdentifier>{74ce6727-e677-4fc2-affa-3da5081e7b55}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
