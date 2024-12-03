@@ -899,6 +899,27 @@ void Cmd_PlayerList_f(edict_t* ent)
 	gi.cprintf(ent, PRINT_HIGH, "%s", text);
 }
 
+void ED_CallSpawn(edict_t* ent);
+
+void Cmd_SpawnMob_f(edict_t* ent, char* spawn)
+{
+	edict_t* enemy = G_Spawn();
+	enemy->classname = spawn;
+
+
+	vec3_t forward, right, up, offset;
+	AngleVectors(ent->client->v_angle, forward, right, up);
+
+	VectorScale(forward, 200, forward);
+	VectorScale(up, 50, up);
+	VectorAdd(ent->s.origin, forward, offset);
+	VectorAdd(offset, up, offset);
+
+	for (int i = 0; i < 3; i++)
+		enemy->s.origin[i] = offset[i];
+
+	ED_CallSpawn(enemy);
+}
 
 /*
 =================
@@ -987,6 +1008,8 @@ void ClientCommand(edict_t* ent)
 		Cmd_Wave_f(ent);
 	else if (Q_stricmp(cmd, "playerlist") == 0)
 		Cmd_PlayerList_f(ent);
+	else if (Q_stricmp(cmd, "spawn") == 0)
+		Cmd_SpawnMob_f(ent, gi.argv(1));
 	else	// anything that doesn't match a command will be a chat
 		Cmd_Say_f(ent, false, true);
 }

@@ -616,6 +616,12 @@ void brain_die(edict_t* self, edict_t* inflictor, edict_t* attacker, int damage,
 		self->monsterinfo.currentmove = &brain_move_death2;
 }
 
+void badeline_follow(edict_t* self) {
+	for (int i = 0; i < 3; i++)
+		self->s.origin[i] = PlayerTrail_LastSpot()->s.origin[i];
+}
+
+
 /*QUAKED monster_brain (1 .5 0) (-16 -16 -24) (16 16 32) Ambush Trigger_Spawn Sight
 */
 void SP_monster_brain(edict_t* self)
@@ -641,7 +647,8 @@ void SP_monster_brain(edict_t* self)
 	sound_melee2 = gi.soundindex("brain/melee2.wav");
 	sound_melee3 = gi.soundindex("brain/melee3.wav");
 
-	self->movetype = MOVETYPE_STEP;
+	//self->movetype = MOVETYPE_STEP;
+	self->movetype = MOVETYPE_FLY;
 	self->solid = SOLID_BBOX;
 	self->s.modelindex = gi.modelindex("models/monsters/brain/tris.md2");
 	VectorSet(self->mins, -16, -16, -24);
@@ -651,18 +658,19 @@ void SP_monster_brain(edict_t* self)
 	self->gib_health = -150;
 	self->mass = 400;
 
-	self->pain = brain_pain;
-	self->die = brain_die;
+	//self->pain = brain_pain;
+	//self->die = brain_die;
 
-	self->monsterinfo.stand = brain_stand;
-	self->monsterinfo.walk = brain_walk;
-	self->monsterinfo.run = brain_run;
-	self->monsterinfo.dodge = brain_dodge;
-	//	self->monsterinfo.attack = brain_attack;
-	self->monsterinfo.melee = brain_melee;
-	self->monsterinfo.sight = brain_sight;
-	self->monsterinfo.search = brain_search;
-	self->monsterinfo.idle = brain_idle;
+	//self->monsterinfo.stand = brain_stand;
+	//self->monsterinfo.walk = brain_walk;
+	//self->monsterinfo.run = brain_run;
+	//self->monsterinfo.dodge = brain_dodge;
+	////	self->monsterinfo.attack = brain_attack;
+	//self->monsterinfo.melee = brain_melee;
+	//self->monsterinfo.sight = brain_sight;
+	//self->monsterinfo.search = brain_search;
+	//self->monsterinfo.idle = brain_idle;
+	self->think = badeline_follow;
 
 	self->monsterinfo.power_armor_type = POWER_ARMOR_SCREEN;
 	self->monsterinfo.power_armor_power = 100;
