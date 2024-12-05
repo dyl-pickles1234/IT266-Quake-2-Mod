@@ -549,7 +549,11 @@ qboolean monster_start(edict_t* self)
 	if (!(self->monsterinfo.aiflags & AI_GOOD_GUY))
 		level.total_monsters++;
 
-	self->nextthink = level.time + FRAMETIME;
+	if (Q_stricmp(self->classname, "monster_brain") == 0) {
+		self->nextthink = level.time + 2;
+	}
+	else
+		self->nextthink = level.time + FRAMETIME;
 	self->svflags |= SVF_MONSTER;
 	self->s.renderfx |= RF_FRAMELERP;
 	self->takedamage = DAMAGE_AIM;
@@ -689,9 +693,15 @@ void walkmonster_start_go(edict_t* self)
 		monster_triggered_start(self);
 }
 
+void badeline_follow(edict_t* self);
+
 void walkmonster_start(edict_t* self)
 {
-	self->think = walkmonster_start_go;
+	if (Q_stricmp(self->classname, "monster_brain") == 0) {
+		self->think = badeline_follow;
+	}
+	else
+		self->think = walkmonster_start_go;
 	monster_start(self);
 }
 

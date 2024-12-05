@@ -618,9 +618,10 @@ void brain_die(edict_t* self, edict_t* inflictor, edict_t* attacker, int damage,
 
 void badeline_follow(edict_t* self) {
 	for (int i = 0; i < 3; i++)
-		self->s.origin[i] = PlayerTrail_LastSpot()->s.origin[i];
+		self->s.origin[i] = PlayerTrail_PickFirst(self)->s.origin[i];
+	gi.dprintf("monster set to pos %f %f %f\n", PlayerTrail_PickFirst(self)->s.origin[0], PlayerTrail_PickFirst(self)->s.origin[1], PlayerTrail_PickFirst(self)->s.origin[2]);
+	self->nextthink = FRAMETIME;
 }
-
 
 /*QUAKED monster_brain (1 .5 0) (-16 -16 -24) (16 16 32) Ambush Trigger_Spawn Sight
 */
@@ -658,27 +659,26 @@ void SP_monster_brain(edict_t* self)
 	self->gib_health = -150;
 	self->mass = 400;
 
-	//self->pain = brain_pain;
-	//self->die = brain_die;
+	self->pain = brain_pain;
+	self->die = brain_die;
 
-	//self->monsterinfo.stand = brain_stand;
-	//self->monsterinfo.walk = brain_walk;
-	//self->monsterinfo.run = brain_run;
-	//self->monsterinfo.dodge = brain_dodge;
-	////	self->monsterinfo.attack = brain_attack;
-	//self->monsterinfo.melee = brain_melee;
-	//self->monsterinfo.sight = brain_sight;
-	//self->monsterinfo.search = brain_search;
-	//self->monsterinfo.idle = brain_idle;
-	self->think = badeline_follow;
+	self->monsterinfo.stand = brain_stand;
+	self->monsterinfo.walk = brain_walk;
+	self->monsterinfo.run = brain_run;
+	self->monsterinfo.dodge = brain_dodge;
+	//	self->monsterinfo.attack = brain_attack;
+	self->monsterinfo.melee = brain_melee;
+	self->monsterinfo.sight = brain_sight;
+	self->monsterinfo.search = brain_search;
+	self->monsterinfo.idle = brain_idle;
 
 	self->monsterinfo.power_armor_type = POWER_ARMOR_SCREEN;
 	self->monsterinfo.power_armor_power = 100;
-
 	gi.linkentity(self);
 
 	self->monsterinfo.currentmove = &brain_move_stand;
 	self->monsterinfo.scale = MODEL_SCALE;
 
+	self->nextthink = 2;
 	walkmonster_start(self);
 }
