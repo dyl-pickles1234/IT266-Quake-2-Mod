@@ -1562,6 +1562,9 @@ void PrintPmove(pmove_t* pm)
 	Com_Printf("sv %3i:%i %i\n", pm->cmd.impulse, c1, c2);
 }
 
+void Dash(edict_t* ent);
+void FastFall(edict_t* ent);
+
 /*
 ==============
 ClientThink
@@ -1614,7 +1617,9 @@ void ClientThink(edict_t* ent, usercmd_t* ucmd)
 			client->ps.pmove.pm_type = PM_NORMAL;
 
 		client->ps.pmove.gravity = sv_gravity->value; // USEFUL for dash
+		Dash(ent);
 		pm.s = client->ps.pmove;
+
 
 		for (i = 0; i < 3; i++)
 		{
@@ -1652,6 +1657,14 @@ void ClientThink(edict_t* ent, usercmd_t* ucmd)
 		client->resp.cmd_angles[0] = SHORT2ANGLE(ucmd->angles[0]);
 		client->resp.cmd_angles[1] = SHORT2ANGLE(ucmd->angles[1]);
 		client->resp.cmd_angles[2] = SHORT2ANGLE(ucmd->angles[2]);
+
+		if (ent->client->ps.pmove.pm_flags & PMF_DUCKED) {
+			FastFall(ent);
+		}
+
+		if (pm.groundentity) {
+			ent->dashes = 1;
+		}
 
 		if (ent->groundentity && !pm.groundentity && (pm.cmd.upmove >= 10) && (pm.waterlevel == 0))
 		{
@@ -1806,7 +1819,7 @@ void ClientBeginServerFrame(edict_t* ent)
 	// add player trail so monsters can follow
 	if (!deathmatch->value) {
 		//if (!visible(ent, PlayerTrail_LastSpot())) {
-			PlayerTrail_Add(ent->s.old_origin);
+		PlayerTrail_Add(ent->s.old_origin);
 		//}
 	}
 

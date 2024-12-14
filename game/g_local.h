@@ -1109,5 +1109,9 @@ struct edict_s
 	// common data blocks
 	moveinfo_t		moveinfo;
 	monsterinfo_t	monsterinfo;
+
+	int dashes;
+	float dashTime;
+	vec3_t dashDir;
 };
 

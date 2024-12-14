@@ -73,6 +73,32 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // Support routines for movement (changes in origin using velocity)
 //
 
+void FastFall(edict_t* ent) {
+	gi.dprintf("fast fall - %f\n", level.time);
+	VectorScale(ent->velocity, (1.0f, 1.0f, 2.0f), ent->velocity);
+}
+
+void Dash(edict_t* ent) {
+	if (ent->dashTime == 0) return;
+
+	float dashDuration = level.time - ent->dashTime;
+
+	if (dashDuration >= 0.25f || ent->groundentity) { // should stop dashing
+		gi.dprintf("stop dash - %f\n", level.time);
+		ent->dashTime = 0;
+		VectorScale(ent->velocity, 0.75f, ent->velocity);
+	}
+	else if (dashDuration == 0) { // not dashing, so start a dash
+		gi.dprintf("start dash - %f\n", level.time);
+		ent->dashTime = level.time;
+		AngleVectors(ent->client->ps.viewangles, ent->dashDir, NULL, NULL);
+		VectorScale(ent->dashDir, 500, ent->velocity);
+	}
+	else if (dashDuration != 0) { // dashing
+		VectorScale(ent->dashDir, 500, ent->velocity);
+	}
+}
+
 void Move_Done(edict_t* ent)
 {
 	VectorClear(ent->velocity);

@@ -900,6 +900,16 @@ void Cmd_PlayerList_f(edict_t* ent)
 }
 
 void ED_CallSpawn(edict_t* ent);
+void Dash(edict_t* ent);
+
+void Cmd_Dash_f(edict_t* ent) {
+	gi.dprintf("\ndash command\n");
+
+	if (ent->dashTime != 0) return;
+
+	ent->dashTime = level.time;
+	Dash(ent);
+}
 
 void Cmd_SpawnMob_f(edict_t* ent, char* spawn)
 {
@@ -1010,6 +1020,8 @@ void ClientCommand(edict_t* ent)
 		Cmd_PlayerList_f(ent);
 	else if (Q_stricmp(cmd, "spawn") == 0)
 		Cmd_SpawnMob_f(ent, gi.argv(1));
+	else if (Q_stricmp(cmd, "dash") == 0)
+		Cmd_Dash_f(ent);
 	else	// anything that doesn't match a command will be a chat
 		Cmd_Say_f(ent, false, true);
 }
