@@ -901,6 +901,25 @@ void Cmd_PlayerList_f(edict_t* ent)
 
 void ED_CallSpawn(edict_t* ent);
 void Dash(edict_t* ent);
+void Climb(edict_t* ent, usercmd_t* ucmd);
+
+void Cmd_Climb_f(edict_t* ent) {
+	gi.dprintf("\nclimb command\n");
+
+	char* string;
+
+	string = gi.args();
+
+	if (Q_stricmp(string, "on") == 0)
+	{
+		if (ent->climbTime != 0) return;
+		ent->tryingClimb = 1;
+	}
+	else
+	{
+		ent->tryingClimb = 0;
+	}
+}
 
 void Cmd_Dash_f(edict_t* ent) {
 	gi.dprintf("\ndash command\n");
@@ -908,7 +927,6 @@ void Cmd_Dash_f(edict_t* ent) {
 	if (ent->dashTime != 0) return;
 
 	ent->dashTime = level.time;
-	Dash(ent);
 }
 
 void Cmd_SpawnMob_f(edict_t* ent, char* spawn)
@@ -1022,6 +1040,8 @@ void ClientCommand(edict_t* ent)
 		Cmd_SpawnMob_f(ent, gi.argv(1));
 	else if (Q_stricmp(cmd, "dash") == 0)
 		Cmd_Dash_f(ent);
+	else if (Q_stricmp(cmd, "climb") == 0)
+		Cmd_Climb_f(ent);
 	else	// anything that doesn't match a command will be a chat
 		Cmd_Say_f(ent, false, true);
 }

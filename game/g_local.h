@@ -1113,5 +1113,11 @@ struct edict_s
 	int dashes;
 	float dashTime;
 	vec3_t dashDir;
+
+	int tryingClimb;
+	float climbTime;
+	int stamina;
+	trace_t climbingWall;
+	vec3_t climbingPos;
 };
 

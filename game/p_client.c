@@ -1347,6 +1347,16 @@ void ClientBegin(edict_t* ent)
 		}
 	}
 
+	ent->stamina = 110;
+
+	gi.WriteByte(svc_stufftext);
+	gi.WriteString("alias +climb climb on\n");
+	gi.unicast(ent, true);
+
+	gi.WriteByte(svc_stufftext);
+	gi.WriteString("alias -climb climb off\n");
+	gi.unicast(ent, true);
+
 	// make sure all view stuff is valid
 	ClientEndServerFrame(ent);
 }
@@ -1564,6 +1574,7 @@ void PrintPmove(pmove_t* pm)
 
 void Dash(edict_t* ent);
 void FastFall(edict_t* ent);
+void Climb(edict_t* ent, usercmd_t* ucmd);
 
 /*
 ==============
@@ -1618,6 +1629,7 @@ void ClientThink(edict_t* ent, usercmd_t* ucmd)
 
 		client->ps.pmove.gravity = sv_gravity->value; // USEFUL for dash
 		Dash(ent);
+		Climb(ent, ucmd);
 		pm.s = client->ps.pmove;
 
 
@@ -1658,12 +1670,13 @@ void ClientThink(edict_t* ent, usercmd_t* ucmd)
 		client->resp.cmd_angles[1] = SHORT2ANGLE(ucmd->angles[1]);
 		client->resp.cmd_angles[2] = SHORT2ANGLE(ucmd->angles[2]);
 
-		if (ent->client->ps.pmove.pm_flags & PMF_DUCKED) {
+		if (pm.cmd.upmove < 0 && !pm.groundentity) {
 			FastFall(ent);
 		}
 
-		if (pm.groundentity) {
+		if (pm.groundentity) { // or dash crystal?
 			ent->dashes = 1;
+			ent->stamina = 110;
 		}
 
 		if (ent->groundentity && !pm.groundentity && (pm.cmd.upmove >= 10) && (pm.waterlevel == 0))

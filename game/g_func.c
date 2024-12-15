@@ -73,26 +73,108 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // Support routines for movement (changes in origin using velocity)
 //
 
+void Climb(edict_t* ent, usercmd_t* ucmd) {
+	if (!ent->tryingClimb) {
+		ent->climbTime = 0;
+		return;
+	}
+
+	if (ent->climbTime == 0 && ent->stamina > 20) { // not climbing yet, let's try
+		gi.dprintf("trying to climb - %f\n", level.time);
+
+		vec3_t lookDir, src, dest;
+		AngleVectors(ent->client->ps.viewangles, lookDir, NULL, NULL);
+		VectorScale(lookDir, 25, lookDir);
+
+		VectorCopy(ent->s.origin, src);
+		//src[2] += ent->viewheight;
+		VectorAdd(src, lookDir, dest);
+
+		trace_t wallDetect = gi.trace(src, ent->mins, ent->maxs, dest, ent, MASK_DEADSOLID);
+		gi.dprintf("player - %f %f %f\n", src[0], src[1], src[2]);
+		gi.dprintf("dest   - %f %f %f\n", dest[0], dest[1], dest[2]);
+		gi.dprintf("endpos - %f %f %f\n", wallDetect.endpos[0], wallDetect.endpos[1], wallDetect.endpos[2]);
+
+		if (wallDetect.fraction < 1.0f) { // found something
+			if (wallDetect.plane.type <= 1) { // if wall
+				gi.dprintf("start climb - %f\n", level.time);
+				ent->climbTime = level.time;
+				ent->climbingWall = wallDetect;
+				VectorCopy(wallDetect.endpos, ent->climbingPos);
+				//VectorCopy(ent->climbingPos, ent->s.origin);
+				//ent->s.origin[2] -= ent->viewheight;
+				ent->client->ps.pmove.gravity = 0;
+				VectorScale(ent->velocity, 0, ent->velocity);
+			}
+		}
+		else { // abort
+			ent->climbTime = 0;
+		}
+		return;
+	}
+
+	// we're climbing now
+	float climbDuration = level.time - ent->climbTime;
+
+	if (climbDuration >= 3.0f || ent->stamina <= 0) { // should stop climbing
+		gi.dprintf("stop climbing - %f\n", level.time);
+		ent->climbTime = 0;
+		ent->stamina = 0;
+	}
+	else if (climbDuration != 0) { // climbing
+		//ent->s.origin[2] -= ent->viewheight;
+		ent->client->ps.pmove.gravity = 0;
+		VectorScale(ent->velocity, 0, ent->velocity);
+
+		vec3_t vr, vup, vf;
+
+		vf[0] = ent->climbingWall.plane.normal[0];
+		vf[1] = ent->climbingWall.plane.normal[1];
+		vf[2] = ent->climbingWall.plane.normal[2];
+
+		PerpendicularVector(vr, ent->climbingWall.plane.normal);
+		CrossProduct(vr, vf, vup);
+
+		VectorScale(vr, ucmd->sidemove/2, vr);
+		VectorScale(vup, -ucmd->forwardmove/2, vup);
+
+		VectorAdd(ent->velocity, vr, ent->velocity);
+		VectorAdd(ent->velocity, vup, ent->velocity);
+
+		ucmd->sidemove = 0;
+		ucmd->forwardmove = 0;
+		//VectorCopy(ent->climbingPos, ent->s.origin);
+
+		if (ucmd->upmove > 0) { // walljump
+			gi.dprintf("walljump - %f\n", level.time);
+			ent->climbTime = 0;
+			ent->stamina -= 25;
+			VectorScale(ent->climbingWall.plane.normal, 100, ent->velocity);
+			ent->velocity[2] = 300;
+		}
+	}
+}
+
 void FastFall(edict_t* ent) {
 	gi.dprintf("fast fall - %f\n", level.time);
-	VectorScale(ent->velocity, (1.0f, 1.0f, 2.0f), ent->velocity);
+	ent->velocity[2] -= 5.0f;
 }
 
 void Dash(edict_t* ent) {
-	if (ent->dashTime == 0) return;
+	if (ent->dashTime == 0 || ent->dashes <= 0) return;
 
 	float dashDuration = level.time - ent->dashTime;
 
-	if (dashDuration >= 0.25f || ent->groundentity) { // should stop dashing
+	if (dashDuration == 0) { // not dashing, so start a dash
+		gi.dprintf("start dash - %f\n", level.time);
+		ent->dashes--;
+		AngleVectors(ent->client->ps.viewangles, ent->dashDir, NULL, NULL);
+		VectorScale(ent->dashDir, 500, ent->velocity);
+	}
+	else if (dashDuration >= 0.25f || ent->groundentity) { // should stop dashing
 		gi.dprintf("stop dash - %f\n", level.time);
 		ent->dashTime = 0;
 		VectorScale(ent->velocity, 0.75f, ent->velocity);
-	}
-	else if (dashDuration == 0) { // not dashing, so start a dash
-		gi.dprintf("start dash - %f\n", level.time);
-		ent->dashTime = level.time;
-		AngleVectors(ent->client->ps.viewangles, ent->dashDir, NULL, NULL);
-		VectorScale(ent->dashDir, 500, ent->velocity);
 	}
 	else if (dashDuration != 0) { // dashing
 		VectorScale(ent->dashDir, 500, ent->velocity);

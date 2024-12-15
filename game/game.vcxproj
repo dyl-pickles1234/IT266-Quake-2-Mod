@@ -184,6 +184,9 @@
       <AdditionalDependencies>winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ModuleDefinitionFile>.\game.def</ModuleDefinitionFile>
     </Link>
+    <PostBuildEvent>
+      <Command>cd "C:\Program Files (x86)\Steam\steamapps\common\Quake 2" &amp;&amp; "C:\Program Files (x86)\Steam\steamapps\common\Quake 2\quake2.exe" +set game mod</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release Alpha|Win32'">
     <ClCompile>
