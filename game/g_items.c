@@ -561,6 +561,14 @@ void DoubleDashCrystal_think(edict_t* self)
 	SetRespawn(self, 3);
 }
 
+void Feather_think(edict_t* self)
+{
+	gi.dprintf("feather wore off - %f\n", level.time);
+	self->owner->feather = false;
+	self->owner->dashes = 1;
+	SetRespawn(self, 3);
+}
+
 qboolean Pickup_Dash_Crystal(edict_t* ent, edict_t* other) {
 	if (other->dashes <= 0 || other->stamina != 110) {
 		gi.dprintf("dash crystal - %f\n", level.time);
@@ -583,6 +591,26 @@ qboolean Pickup_Double_Dash_Crystal(edict_t* ent, edict_t* other) {
 
 		ent->think = DoubleDashCrystal_think;
 		ent->nextthink = level.time + 10;
+		ent->owner = other;
+		ent->flags |= FL_RESPAWN;
+		ent->svflags |= SVF_NOCLIENT;
+		ent->solid = SOLID_NOT;
+
+		return true;
+	}
+	else return false;
+}
+
+qboolean Pickup_Feather(edict_t* ent, edict_t* other) {
+	if (other->dashes <= 0 || other->stamina != 110 || !other->doubleDash) {
+		gi.dprintf("feather - %f\n", level.time);
+		other->dashes = 1;
+		other->dashTime = 0;
+		other->stamina = 110;
+		other->feather = true;
+
+		ent->think = Feather_think;
+		ent->nextthink = level.time + 3;
 		ent->owner = other;
 		ent->flags |= FL_RESPAWN;
 		ent->svflags |= SVF_NOCLIENT;
@@ -2169,8 +2197,8 @@ key for computer centers
 			0,
 			NULL
 },
-{ "double_dash_crystal",
-	Pickup_Double_Dash_Crystal,
+{ "feather",
+	Pickup_Feather,
 	NULL,
 	NULL,
 	NULL,
@@ -2178,9 +2206,9 @@ key for computer centers
 	NULL, 0,
 			NULL,
 			NULL,
-			"Double Dash Crystal",
+			"Feather",
 			1,
-			2,
+			1,
 			NULL,
 			0,
 			0,
@@ -2225,9 +2253,32 @@ void SP_item_double_dash_crystal(edict_t* self)
 		return;
 	}
 
-	self->model = "models/items/healing/medium/tris.md2";
+	self->model = "models/items/mega_h/tris.md2";
 	self->count = 1;
 	SpawnItem(self, FindItem("Double Dash Crystal"));
+	self->think = NULL;
+	self->nextthink = 0;
+
+	gi.setmodel(self, self->model);
+	self->solid = SOLID_TRIGGER;
+	self->movetype = MOVETYPE_NONE;
+	self->touch = Touch_Item;
+
+	gi.linkentity(self);
+	gi.soundindex("items/n_health.wav");
+}
+
+void SP_item_feather(edict_t* self)
+{
+	if (deathmatch->value && ((int)dmflags->value & DF_NO_HEALTH))
+	{
+		G_FreeEdict(self);
+		return;
+	}
+
+	self->model = "models/items/healing/stimpack/tris.md2";
+	self->count = 1;
+	SpawnItem(self, FindItem("Feather"));
 	self->think = NULL;
 	self->nextthink = 0;
 

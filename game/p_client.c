@@ -1575,6 +1575,7 @@ void PrintPmove(pmove_t* pm)
 void Dash(edict_t* ent);
 void FastFall(edict_t* ent);
 void Climb(edict_t* ent, usercmd_t* ucmd);
+void Feather(edict_t* ent);
 
 /*
 ==============
@@ -1630,7 +1631,7 @@ void ClientThink(edict_t* ent, usercmd_t* ucmd)
 		client->ps.pmove.gravity = sv_gravity->value; // USEFUL for dash
 		Dash(ent);
 		Climb(ent, ucmd);
-		//gi.centerprintf(ent, "dashes - %i\n", ent->dashes);
+		if (ent->feather) Feather(ent);
 		pm.s = client->ps.pmove;
 
 

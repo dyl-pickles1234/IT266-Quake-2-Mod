@@ -1120,5 +1120,7 @@ struct edict_s
 	int stamina;
 	trace_t climbingWall;
 	vec3_t climbingPos;
+
+	int feather;
 };
 

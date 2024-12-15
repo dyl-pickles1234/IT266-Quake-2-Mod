@@ -73,6 +73,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // Support routines for movement (changes in origin using velocity)
 //
 
+void Feather(edict_t* ent) {
+	gi.dprintf("feather fly - %f\n", level.time);
+	AngleVectors(ent->client->ps.viewangles, ent->velocity, NULL, NULL);
+	VectorScale(ent->velocity, 250, ent->velocity);
+}
+
 void Climb(edict_t* ent, usercmd_t* ucmd) {
 	if (!ent->tryingClimb) {
 		ent->climbTime = 0;
