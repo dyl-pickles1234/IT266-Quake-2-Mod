@@ -144,6 +144,8 @@ void SP_turret_breach(edict_t* self);
 void SP_turret_base(edict_t* self);
 void SP_turret_driver(edict_t* self);
 
+void SP_item_dash_crystal(edict_t* self);
+void SP_item_double_dash_crystal(edict_t* self);
 
 spawn_t	spawns[] = {
 	{"item_health", SP_item_health},
@@ -265,6 +267,8 @@ spawn_t	spawns[] = {
 	{"turret_base", SP_turret_base},
 	{"turret_driver", SP_turret_driver},
 
+	{ "item_dash_crystal", SP_item_dash_crystal },
+	{ "item_double_dash_crystal", SP_item_double_dash_crystal },
 	{NULL, NULL}
 };
 

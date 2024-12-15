@@ -925,6 +925,7 @@ void Cmd_Dash_f(edict_t* ent) {
 	gi.dprintf("\ndash command\n");
 
 	if (ent->dashTime != 0) return;
+	if (ent->dashes <= 0) return;
 
 	ent->dashTime = level.time;
 }

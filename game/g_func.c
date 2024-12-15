@@ -135,8 +135,8 @@ void Climb(edict_t* ent, usercmd_t* ucmd) {
 		PerpendicularVector(vr, ent->climbingWall.plane.normal);
 		CrossProduct(vr, vf, vup);
 
-		VectorScale(vr, ucmd->sidemove/2, vr);
-		VectorScale(vup, -ucmd->forwardmove/2, vup);
+		VectorScale(vr, ucmd->sidemove / 2, vr);
+		VectorScale(vup, -ucmd->forwardmove / 2, vup);
 
 		VectorAdd(ent->velocity, vr, ent->velocity);
 		VectorAdd(ent->velocity, vup, ent->velocity);
@@ -161,22 +161,25 @@ void FastFall(edict_t* ent) {
 }
 
 void Dash(edict_t* ent) {
-	if (ent->dashTime == 0 || ent->dashes <= 0) return;
+	if (ent->dashTime == 0) return;
 
 	float dashDuration = level.time - ent->dashTime;
 
-	if (dashDuration == 0) { // not dashing, so start a dash
+	if (dashDuration == 0 && ent->dashes > 0) { // not dashing, so start a dash
 		gi.dprintf("start dash - %f\n", level.time);
+		ent->dashTime -= 0.001f;
 		ent->dashes--;
 		AngleVectors(ent->client->ps.viewangles, ent->dashDir, NULL, NULL);
 		VectorScale(ent->dashDir, 500, ent->velocity);
 	}
-	else if (dashDuration >= 0.25f || ent->groundentity) { // should stop dashing
+	else if (dashDuration >= 0.4f || ent->groundentity) { // should stop dashing
 		gi.dprintf("stop dash - %f\n", level.time);
 		ent->dashTime = 0;
 		VectorScale(ent->velocity, 0.75f, ent->velocity);
+		VectorScale(ent->client->ps.pmove.velocity, 0.75f, ent->client->ps.pmove.velocity);
 	}
 	else if (dashDuration != 0) { // dashing
+		ent->client->ps.pmove.gravity = 0;
 		VectorScale(ent->dashDir, 500, ent->velocity);
 	}
 }

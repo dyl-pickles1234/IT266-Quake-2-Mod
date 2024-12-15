@@ -1630,6 +1630,7 @@ void ClientThink(edict_t* ent, usercmd_t* ucmd)
 		client->ps.pmove.gravity = sv_gravity->value; // USEFUL for dash
 		Dash(ent);
 		Climb(ent, ucmd);
+		//gi.centerprintf(ent, "dashes - %i\n", ent->dashes);
 		pm.s = client->ps.pmove;
 
 
@@ -1675,7 +1676,7 @@ void ClientThink(edict_t* ent, usercmd_t* ucmd)
 		}
 
 		if (pm.groundentity) { // or dash crystal?
-			ent->dashes = 1;
+			ent->dashes = ent->doubleDash ? 2 : 1;
 			ent->stamina = 110;
 		}
 

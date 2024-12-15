@@ -553,6 +553,46 @@ void MegaHealth_think(edict_t* self)
 		G_FreeEdict(self);
 }
 
+void DoubleDashCrystal_think(edict_t* self)
+{
+	gi.dprintf("double dash wore off - %f\n", level.time);
+	self->owner->doubleDash = false;
+	if (self->owner->dashes == 2) self->owner->dashes = 1;
+	SetRespawn(self, 3);
+}
+
+qboolean Pickup_Dash_Crystal(edict_t* ent, edict_t* other) {
+	if (other->dashes <= 0 || other->stamina != 110) {
+		gi.dprintf("dash crystal - %f\n", level.time);
+		other->dashes = 1;
+		other->dashTime = 0;
+		other->stamina = 110;
+		SetRespawn(ent, 3);
+		return true;
+	}
+	else return false;
+}
+
+qboolean Pickup_Double_Dash_Crystal(edict_t* ent, edict_t* other) {
+	if (other->dashes <= 0 || other->stamina != 110 || !other->doubleDash) {
+		gi.dprintf("double dash crystal - %f\n", level.time);
+		other->dashes = 2;
+		other->dashTime = 0;
+		other->stamina = 110;
+		other->doubleDash = true;
+
+		ent->think = DoubleDashCrystal_think;
+		ent->nextthink = level.time + 10;
+		ent->owner = other;
+		ent->flags |= FL_RESPAWN;
+		ent->svflags |= SVF_NOCLIENT;
+		ent->solid = SOLID_NOT;
+
+		return true;
+	}
+	else return false;
+}
+
 qboolean Pickup_Health(edict_t* ent, edict_t* other)
 {
 	if (!(ent->style & HEALTH_IGNORE_MAX))
@@ -2110,11 +2150,95 @@ key for computer centers
 									0,
 									/* precache */ "items/s_health.wav items/n_health.wav items/l_health.wav items/m_health.wav"
 										},
+	{"dash_crystal",
+	Pickup_Dash_Crystal,
+	NULL,
+	NULL,
+	NULL,
+	"items/pkup.wav",
+	NULL, 0,
+			NULL,
+			NULL,
+			"Dash Crystal",
+			1,
+			1,
+			NULL,
+			0,
+			0,
+			NULL,
+			0,
+			NULL
+},
+{ "double_dash_crystal",
+	Pickup_Double_Dash_Crystal,
+	NULL,
+	NULL,
+	NULL,
+	"items/pkup.wav",
+	NULL, 0,
+			NULL,
+			NULL,
+			"Double Dash Crystal",
+			1,
+			2,
+			NULL,
+			0,
+			0,
+			NULL,
+			0,
+			NULL
+},
 
-	// end of list marker
-	{NULL}
+// end of list marker
+{NULL}
 };
 
+
+void SP_item_dash_crystal(edict_t* self)
+{
+	if (deathmatch->value && ((int)dmflags->value & DF_NO_HEALTH))
+	{
+		G_FreeEdict(self);
+		return;
+	}
+
+	self->model = "models/items/healing/medium/tris.md2";
+	self->count = 1;
+	SpawnItem(self, FindItem("Dash Crystal"));
+	self->think = NULL;
+	self->nextthink = 0;
+
+	gi.setmodel(self, self->model);
+	self->solid = SOLID_TRIGGER;
+	self->movetype = MOVETYPE_NONE;
+	self->touch = Touch_Item;
+
+	gi.linkentity(self);
+	gi.soundindex("items/n_health.wav");
+}
+
+void SP_item_double_dash_crystal(edict_t* self)
+{
+	if (deathmatch->value && ((int)dmflags->value & DF_NO_HEALTH))
+	{
+		G_FreeEdict(self);
+		return;
+	}
+
+	self->model = "models/items/healing/medium/tris.md2";
+	self->count = 1;
+	SpawnItem(self, FindItem("Double Dash Crystal"));
+	self->think = NULL;
+	self->nextthink = 0;
+
+	gi.setmodel(self, self->model);
+	self->solid = SOLID_TRIGGER;
+	self->movetype = MOVETYPE_NONE;
+	self->touch = Touch_Item;
+
+	gi.linkentity(self);
+	gi.soundindex("items/n_health.wav");
+}
 
 /*QUAKED item_health (.3 .3 1) (-16 -16 -16) (16 16 16)
 */

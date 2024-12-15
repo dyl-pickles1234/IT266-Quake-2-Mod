@@ -1111,6 +1111,7 @@ struct edict_s
 	monsterinfo_t	monsterinfo;
 
 	int dashes;
+	int doubleDash;
 	float dashTime;
 	vec3_t dashDir;
 
