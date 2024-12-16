@@ -1126,10 +1126,18 @@ struct edict_s
 	int strawberries;
 
 	int inDashBubble;
+
+	float speedrunStartTime;
 };
 
 typedef struct
 {
-	char* name;
+	char* spawnName;
 	vec3_t pos;
 } customSpawn_t;
+
+typedef struct
+{
+	char* mapName;
+	customSpawn_t* spawns;
+} customMapSpawns_t;

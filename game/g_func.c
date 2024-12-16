@@ -166,6 +166,10 @@ void FastFall(edict_t* ent) {
 	ent->velocity[2] -= 5.0f;
 }
 
+extern int numPlats;
+extern edict_t* allPlats[32];
+void plat_go_up(edict_t* ent);
+
 void Dash(edict_t* ent) {
 	if (ent->dashTime == 0) return;
 
@@ -177,6 +181,11 @@ void Dash(edict_t* ent) {
 		ent->dashes--;
 		AngleVectors(ent->client->ps.viewangles, ent->dashDir, NULL, NULL);
 		VectorScale(ent->dashDir, 500, ent->velocity);
+
+		//activate plats
+		for (int i = 0; i < numPlats; i++) {
+			plat_go_up(allPlats[i]);
+		}
 	}
 	else if (dashDuration >= 0.4f || ent->groundentity) { // should stop dashing
 		gi.dprintf("stop dash - %f\n", level.time);
@@ -668,7 +677,7 @@ void SP_func_plat(edict_t* ent)
 
 	ent->use = Use_Plat;
 
-	plat_spawn_inside_trigger(ent);	// the "start moving" trigger	
+	//plat_spawn_inside_trigger(ent);	// the "start moving" trigger	
 
 	if (ent->targetname)
 	{

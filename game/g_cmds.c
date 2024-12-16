@@ -900,11 +900,11 @@ void Cmd_PlayerList_f(edict_t* ent)
 }
 
 void Cmd_Pos_f(edict_t* ent) {
-	gi.dprintf("Current eye position: %f %f %f\n", ent->s.origin[0], ent->s.origin[1], ent->s.origin[2] + ent->viewheight);
-	
+	gi.dprintf("Current mid position: %f %f %f\n", ent->s.origin[0], ent->s.origin[1], ent->s.origin[2] + ent->viewheight / 2.0f);
+
 	FILE* in;
 	in = fopen("positions.txt", "a");
-	fprintf(in, "{%f, %f, %f}\n", ent->s.origin[0], ent->s.origin[1], ent->s.origin[2] + ent->viewheight);
+	fprintf(in, "{%f,\t%f,\t%f\t}\n", ent->s.origin[0], ent->s.origin[1], ent->s.origin[2] + ent->viewheight / 2);
 	fclose(in);
 }
 
@@ -959,7 +959,7 @@ void Cmd_SpawnMob_f(edict_t* ent, char* spawn)
 	ED_CallSpawn(enemy);
 }
 
-void SpawnThing(char* spawn, vec3_t pos)
+edict_t* SpawnThing(char* spawn, vec3_t pos)
 {
 	edict_t* enemy = G_Spawn();
 	enemy->classname = spawn;
@@ -967,6 +967,7 @@ void SpawnThing(char* spawn, vec3_t pos)
 	VectorCopy(pos, enemy->s.origin);
 
 	ED_CallSpawn(enemy);
+	return enemy;
 }
 
 

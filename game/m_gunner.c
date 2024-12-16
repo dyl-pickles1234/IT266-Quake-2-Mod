@@ -423,27 +423,44 @@ void gunner_opengun(edict_t* self)
 	gi.sound(self, CHAN_VOICE, sound_open, 1, ATTN_IDLE, 0);
 }
 
+edict_t* SpawnThing(char* spawn, vec3_t pos);
+
 void GunnerFire(edict_t* self)
 {
-	vec3_t	start;
-	vec3_t	forward, right;
-	vec3_t	target;
-	vec3_t	aim;
-	int		flash_number;
+	//vec3_t	start;
+	//vec3_t	forward, right;
+	//vec3_t	target;
+	//vec3_t	aim;
+	//int		flash_number;
 
-	flash_number = MZ2_GUNNER_MACHINEGUN_1 + (self->s.frame - FRAME_attak216);
+	//flash_number = MZ2_GUNNER_MACHINEGUN_1 + (self->s.frame - FRAME_attak216);
 
-	AngleVectors(self->s.angles, forward, right, NULL);
-	G_ProjectSource(self->s.origin, monster_flash_offset[flash_number], forward, right, start);
+	//AngleVectors(self->s.angles, forward, right, NULL);
+	//G_ProjectSource(self->s.origin, monster_flash_offset[flash_number], forward, right, start);
 
-	// project enemy back a bit and target there
-	VectorCopy(self->enemy->s.origin, target);
-	VectorMA(target, -0.2, self->enemy->velocity, target);
-	target[2] += self->enemy->viewheight;
+	//// project enemy back a bit and target there
+	//VectorCopy(self->enemy->s.origin, target);
+	//VectorMA(target, -0.2, self->enemy->velocity, target);
+	//target[2] += self->enemy->viewheight;
 
-	VectorSubtract(target, start, aim);
-	VectorNormalize(aim);
-	monster_fire_bullet(self, start, aim, 3, 4, DEFAULT_BULLET_HSPREAD, DEFAULT_BULLET_VSPREAD, flash_number);
+	//VectorSubtract(target, start, aim);
+	//VectorNormalize(aim);
+
+	vec3_t spawnPos;
+	VectorCopy(self->enemy->s.origin, spawnPos);
+	spawnPos[2] -= self->enemy->viewheight / 2;
+	//VectorAdd(spawnPos, self->enemy->velocity, spawnPos);
+
+	edict_t* spike = SpawnThing("func_spike", spawnPos);
+
+	spike->solid = SOLID_NOT;
+	gi.setmodel(spike, "models/items/keys/pyramid/tris.md2");
+	spike->nextthink = level.time + 1;
+
+	vec3_t yellow = { 1.0, 1.0, 0.0 };
+	VectorCopy(yellow, self->enemy->client->damage_blend);
+	self->enemy->client->damage_alpha = 0.25;
+	//monster_fire_bullet(self, start, aim, 3, 4, DEFAULT_BULLET_HSPREAD, DEFAULT_BULLET_VSPREAD, flash_number);
 }
 
 void GunnerGrenade(edict_t* self)

@@ -585,6 +585,19 @@ void Feather_think(edict_t* self)
 	SetRespawn(self, 3);
 }
 
+void Spike_think(edict_t* self)
+{
+	gi.dprintf("spike active - %f\n", level.time);
+	if (self->solid == SOLID_NOT) {
+		self->solid = SOLID_TRIGGER;
+		gi.setmodel(self, self->model);
+		self->nextthink = level.time + 2;
+	}
+	else {
+		G_FreeEdict(self);
+	}
+}
+
 qboolean Pickup_Dash_Crystal(edict_t* ent, edict_t* other) {
 	if (other->dashes <= 0 || other->stamina != 110) {
 		gi.dprintf("dash crystal - %f\n", level.time);
@@ -635,9 +648,65 @@ qboolean Pickup_Feather(edict_t* ent, edict_t* other) {
 	else return false;
 }
 
+extern int totalStrawberries;
 qboolean Pickup_Strawberry(edict_t* ent, edict_t* other) {
 	other->strawberries++;
-	gi.dprintf("strawberries: %i - %f\n", other->strawberries, level.time);
+
+	if (totalStrawberries == -1) gi.dprintf("strawberries: %i - %f\n", other->strawberries, level.time);
+	else {
+		gi.dprintf("strawberries: %i/%i - %f\n", other->strawberries, totalStrawberries, level.time);
+
+		if (other->strawberries == totalStrawberries) {
+			float time = level.time - other->speedrunStartTime;
+			int mins = (int)(time / 60);
+			float secs = time - 60 * mins;
+			gi.centerprintf(other, "Got all strawberries! Time: %im %.2fs", mins, secs);
+
+			FILE* in;
+			char filename[32];
+			strcpy(filename, "mod/save/speedrun_");
+			strcat(filename, level.mapname);
+			strcat(filename, ".txt");
+			in = fopen(filename, "a+");
+
+			fgetc(in);
+
+			if (feof(in)) {
+				fprintf(in, "+%.2im %.2fs", mins, secs);
+				gi.cprintf(other, PRINT_HIGH, "New Record! (saved)");
+				fclose(in);
+				return;
+			}
+
+			char highscoreStr[16];
+			fgets(highscoreStr, 16, in);
+
+			char minStr[] = { highscoreStr[0], highscoreStr[1], '\0' };
+			char secStr[8];
+
+			int i = 4;
+			for (; highscoreStr[i] != 's'; i++) {
+				secStr[i - 4] = highscoreStr[i];
+			}
+			secStr[i - 4] = '\0';
+
+			int hsMins = atoi(minStr);
+			float hsSecs = atof(secStr);
+
+			gi.cprintf(other, PRINT_HIGH, "%sm %ss\n", minStr, secStr);
+			gi.cprintf(other, PRINT_HIGH, "%im %.2fs\n", hsMins, hsSecs);
+
+			if (mins < hsMins || (mins == hsMins && secs < hsSecs)) {
+				fclose(in);
+				in = fopen(filename, "w");
+				fprintf(in, "+%.2im %.2fs", mins, secs);
+				gi.cprintf(other, PRINT_HIGH, "New Record! (-%im %.2fs)", hsMins - mins, hsSecs - secs);
+			}
+			fclose(in);
+
+		}
+	}
+
 	return true;
 }
 
@@ -2580,10 +2649,10 @@ void SP_func_spike(edict_t* self)
 		return;
 	}
 
-	self->model = "models/items/keys/pyramid/tris.md2";
+	self->model = "models/objects/debris2/tris.md2";
 	self->count = 1;
 	SpawnItem(self, FindItem("Spike"));
-	self->think = NULL;
+	self->think = Spike_think;
 	self->nextthink = 0;
 
 	gi.setmodel(self, self->model);

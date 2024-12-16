@@ -629,7 +629,25 @@ qboolean Boss2_CheckAttack(edict_t* self)
 	return false;
 }
 
+void boss2_touch(edict_t* self, edict_t* other, cplane_t* plane, csurface_t* surf) {
+	if (!other->client) return;
+	if (!other->dashTime) return;
+	if (level.time <= self->touch_debounce_time) return;
 
+	gi.dprintf("boss touch - %f\n", level.time);
+	self->touch_debounce_time = level.time + 1;
+	T_Damage(self, other, other, other->dashDir, other->s.origin, other->dashDir, self->max_health / 5, 100, DAMAGE_NO_PROTECTION, MOD_HIT);
+	gi.sound(self, CHAN_VOICE, sound_pain2, 1, ATTN_NONE, 0);
+	other->dashTime = 0;
+
+	vec3_t push;
+	VectorSubtract(other->s.origin, self->s.origin, push);
+	push[2] = 0;
+	VectorNormalize2(push, push);
+	push[2] = 1;
+	VectorNormalize2(push, push);
+	VectorScale(push, 350, other->velocity);
+}
 
 /*QUAKED monster_boss2 (1 .5 0) (-56 -56 0) (56 56 80) Ambush Trigger_Spawn Sight
 */
@@ -656,13 +674,17 @@ void SP_monster_boss2(edict_t* self)
 	VectorSet(self->maxs, 56, 56, 80);
 
 	self->health = 2000;
+	self->max_health = 2000;
 	self->gib_health = -200;
 	self->mass = 1000;
 
 	self->flags |= FL_IMMUNE_LASER;
+	self->flags |= FL_GODMODE;
 
 	self->pain = boss2_pain;
 	self->die = boss2_die;
+	self->touch = boss2_touch;
+	self->touch_debounce_time = level.time + 1;
 
 	self->monsterinfo.stand = boss2_stand;
 	self->monsterinfo.walk = boss2_walk;

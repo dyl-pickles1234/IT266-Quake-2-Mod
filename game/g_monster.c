@@ -549,7 +549,10 @@ qboolean monster_start(edict_t* self)
 	if (!(self->monsterinfo.aiflags & AI_GOOD_GUY))
 		level.total_monsters++;
 
-	if (Q_stricmp(self->classname, "monster_brain") == 0) {
+	if (Q_stricmp(self->classname, "monster_chick") == 0) {
+		self->nextthink = level.time + 2;
+	}
+	else if (Q_stricmp(self->classname, "monster_flyer") == 0) {
 		self->nextthink = level.time + 2;
 	}
 	else
@@ -693,11 +696,53 @@ void walkmonster_start_go(edict_t* self)
 		monster_triggered_start(self);
 }
 
-void badeline_follow(edict_t* self);
+void badeline_follow(edict_t* self) {
+	for (int i = 0; i < 3; i++)
+		self->s.origin[i] = PlayerTrail_PickFirst(self)->s.origin[i];
+	vec3_t dist;
+	VectorSubtract(level.sight_client->s.origin, self->s.origin, dist);
+	if (VectorLength(dist) <= 25.0f) {
+		level.sight_client->die(level.sight_client, self, self, 999, level.sight_client->s.origin);
+	}
+	self->nextthink = level.time + FRAMETIME;
+	vectoangles(dist, self->s.angles);
+}
+
+void octopus_dash(edict_t* self) {
+	vec3_t origin, dist, norm;
+	VectorCopy(level.sight_client->s.origin, origin);
+	origin[2] += level.sight_client->viewheight/2;
+	VectorSubtract(origin, self->s.origin, dist);
+	VectorNormalize2(dist, norm);
+
+	if (VectorLength(dist) <= 75.0f) {
+		if (level.sight_client->s.origin[2] - self->s.origin[2] > 15) { // if feet above it when touching
+			VectorScale(norm, 350, level.sight_client->velocity);
+			VectorNegate(norm, norm);
+			VectorScale(norm, 350, self->velocity);
+			self->s.angles[ROLL] = 90;
+			self->delay = level.time + 5;
+		}
+		else
+			level.sight_client->die(level.sight_client, self, self, 999, level.sight_client->s.origin);
+	}
+	VectorScale(self->velocity, 0.8f, self->velocity);
+	self->nextthink = level.time + FRAMETIME;
+
+	if (self->delay - level.time < 1) {
+		vectoangles(dist, self->s.angles);
+	}
+
+	if (level.time >= self->delay) {
+		VectorScale(norm, 500, self->velocity);
+		self->delay = level.time + 2;
+	}
+}
+
 
 void walkmonster_start(edict_t* self)
 {
-	if (Q_stricmp(self->classname, "monster_brain") == 0) {
+	if (Q_stricmp(self->classname, "monster_chick") == 0) {
 		self->think = badeline_follow;
 	}
 	else
@@ -724,8 +769,14 @@ void flymonster_start_go(edict_t* self)
 
 void flymonster_start(edict_t* self)
 {
-	self->flags |= FL_FLY;
-	self->think = flymonster_start_go;
+	if (Q_stricmp(self->classname, "monster_flyer") == 0) {
+		self->think = octopus_dash;
+		self->movetype = MOVETYPE_FLY;
+	}
+	else {
+		self->flags |= FL_FLY;
+		self->think = flymonster_start_go;
+	}
 	monster_start(self);
 }
 

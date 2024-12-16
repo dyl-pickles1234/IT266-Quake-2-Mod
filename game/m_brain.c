@@ -616,17 +616,6 @@ void brain_die(edict_t* self, edict_t* inflictor, edict_t* attacker, int damage,
 		self->monsterinfo.currentmove = &brain_move_death2;
 }
 
-void badeline_follow(edict_t* self) {
-	for (int i = 0; i < 3; i++)
-		self->s.origin[i] = PlayerTrail_PickFirst(self)->s.origin[i];
-	vec3_t dist;
-	VectorSubtract(level.sight_client->s.origin, self->s.origin, dist);
-	if (VectorLength(dist) <= 10.0f) {
-		level.sight_client->die(level.sight_client, self, self, 999, level.sight_client->s.origin);
-	}
-	self->nextthink = FRAMETIME;
-}
-
 /*QUAKED monster_brain (1 .5 0) (-16 -16 -24) (16 16 32) Ambush Trigger_Spawn Sight
 */
 void SP_monster_brain(edict_t* self)
@@ -652,8 +641,7 @@ void SP_monster_brain(edict_t* self)
 	sound_melee2 = gi.soundindex("brain/melee2.wav");
 	sound_melee3 = gi.soundindex("brain/melee3.wav");
 
-	//self->movetype = MOVETYPE_STEP;
-	self->movetype = MOVETYPE_FLY;
+	self->movetype = MOVETYPE_STEP;
 	self->solid = SOLID_BBOX;
 	self->s.modelindex = gi.modelindex("models/monsters/brain/tris.md2");
 	VectorSet(self->mins, -16, -16, -24);
@@ -683,6 +671,5 @@ void SP_monster_brain(edict_t* self)
 	self->monsterinfo.currentmove = &brain_move_stand;
 	self->monsterinfo.scale = MODEL_SCALE;
 
-	self->nextthink = 2;
 	walkmonster_start(self);
 }

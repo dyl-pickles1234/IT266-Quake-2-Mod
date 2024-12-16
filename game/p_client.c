@@ -1296,12 +1296,40 @@ to be placed into the game.  This will happen every level load.
 ============
 */
 
-void SpawnThing(char* spawn, vec3_t pos);
+int totalStrawberries;
+edict_t* SpawnThing(char* spawn, vec3_t pos);
 
-customSpawn_t customSpawns[] = {
+customSpawn_t customSpawns_q2dm1[] = {
 	{"item_dash_crystal", {1152, 713, 494}},
+	{"item_strawberry", {1181.750000,	325.625000,	483.125000	}},
+	{"item_strawberry", {1210.750000,	696.125000,	740.000000	}},
+	{"item_strawberry", {1725.000000,	1023.00000,	1059.125000	}},
+	{"item_strawberry", {1275.875000,	705.250000,	1124.750000	}},
+	{"item_strawberry", {1887.375000,	990.500000,	611.125000	}},
+	{"item_strawberry", {1973.625000,	278.250000,	675.125000	}},
+	{"item_strawberry", {1867.875000,	-73.875000,	931.125000	}},
+	{"item_strawberry", {317.625000,	442.500000,	987.375000	}},
+	{"item_strawberry", {429.875000,	739.125000,	347.125000	}},
+	{"item_strawberry", {1439.625000,	919.625000,	363.125000	}},
+	{"item_strawberry", {1284.000000,	82.625000,	715.125000	}},
+	{"item_strawberry", {1515.625000,	-20.625000,	547.125000	}},
+	{"item_strawberry", {1453.625000,	260.375000,	941.125000	}},
 	{NULL, 0}
 };
+
+customSpawn_t customSpawns_q2dm2[] = {
+	{"item_strawberry", {0,0,0}},
+	{NULL, 0}
+};
+
+customMapSpawns_t customMapSpawns[] = {
+	{"q2dm1", customSpawns_q2dm1},
+	{"q2dm2", customSpawns_q2dm2},
+	{NULL, NULL}
+};
+
+int numPlats;
+edict_t* allPlats[32];
 
 void ClientBegin(edict_t* ent)
 {
@@ -1355,6 +1383,24 @@ void ClientBegin(edict_t* ent)
 		}
 	}
 
+	edict_t* from;
+
+	from = g_edicts;
+	for (; from < &g_edicts[globals.num_edicts]; from++)
+	{
+		if (!from->inuse)
+			continue;
+		if (from->solid == SOLID_NOT)
+			continue;
+		if (Q_stricmp(from->classname, "func_plat") != 0) continue;
+
+		from->moveinfo.speed *= 4;
+		from->moveinfo.accel *= 2;
+		from->moveinfo.decel *= 5;
+		allPlats[numPlats] = from;
+		numPlats++;
+	}
+
 	ent->stamina = 110;
 
 	gi.WriteByte(svc_stufftext);
@@ -1365,12 +1411,22 @@ void ClientBegin(edict_t* ent)
 	gi.WriteString("alias -climb climb off\n");
 	gi.unicast(ent, true);
 
-	if (Q_stricmp(level.mapname, "q2dm1") == 0) {
-		for (int i = 0; customSpawns[i].name; i++) {
-			SpawnThing(customSpawns[i].name, customSpawns[i].pos);
+	totalStrawberries = -1;
+	ent->speedrunStartTime = -1;
+
+	for (int k = 0; customMapSpawns[k].mapName; k++) {
+		if (Q_stricmp(level.mapname, customMapSpawns[k].mapName) == 0) {
+			ent->speedrunStartTime = level.time;
+			totalStrawberries = 0;
+			for (int j = 0; customMapSpawns[k].spawns[j].spawnName; j++) {
+				SpawnThing(customMapSpawns[k].spawns[j].spawnName, customMapSpawns[k].spawns[j].pos);
+				if (Q_stricmp(customMapSpawns[k].spawns[j].spawnName, "item_strawberry") == 0) {
+					totalStrawberries++;
+				}
+			}
 		}
 	}
-
+	gi.dprintf("plats: %i", numPlats);
 	// make sure all view stuff is valid
 	ClientEndServerFrame(ent);
 }
