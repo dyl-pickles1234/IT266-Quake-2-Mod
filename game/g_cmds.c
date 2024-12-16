@@ -908,6 +908,78 @@ void Cmd_Pos_f(edict_t* ent) {
 	fclose(in);
 }
 
+
+void Cmd_CelesteHelp_f(edict_t* ent) {
+	char* string;
+
+	string = gi.args();
+
+	if (Q_stricmp(string, "movement") == 0)
+	{
+		gi.bprintf(PRINT_HIGH, "\n\n%s\n\n\n%s\n\n%s\n\n%s\n\n%s\n\n%s\n\n%s\n\n",
+			"Movement (player movement mechanics)",
+			"The dash! A simple boost along the direction you're looking in for a short time. You only get one, but it replenishes when you stand on the ground or touch some other objects (check out the items section).",
+			"Wallclimbing allows you to grip onto a nearby wall you're looking at while holding the climb key. You can use your regular movement keys to crawl up and around the wall you're attached to. Careful, climbing a wall takes up stamina, and if you run out, you can't grab walls! Stamina can be restored by some of the same ways you regain your dashes.",
+			"Working off of that, you can press your jump key to perform a walljump, which boosts you upwards and away from the wall you were just climbing. Jumping also takes up a good amount of your stamina, so you can't just walljump anywhere.",
+			"Wavedashing is a technique that allows a player to gain lots of speed quickly. By dashing diagonally forward and down into a floor, you can press jump just before touching the ground to get a boost and carry your dash momentum.",
+			"Fastfalling is good for getting to the ground quickly. Hold the crouch key to fall faster than you normally would.",
+			"The controls for these mechanics are customizable. You can bind dash and +climb to any key you'd like, the walljump is based on your regular jump key, and fast fall is based on your crouch key."
+		);
+	}
+	else if (Q_stricmp(string, "objects") == 0)
+	{
+		gi.bprintf(PRINT_HIGH, "\n\n%s\n\n\n%s\n\n%s\n\n%s\n\n%s\n\n%s\n\n",
+			"Objects (world interactables)",
+			"Spikes kill! If a player touches a spike, they will die and have to respawn. Spikes spawned via command will be dangerous immediately, but spikes summoned by a custom enemy are a bit different (check out the enemies section).",
+			"Moving platforms are no longer activated by a player stepping on them. Instead, a player must use a dash to activate all platforms in the map. They also move much faster.",
+			"Springboards bounce the player into the air when touched, and also resets stamina and replenishes your dashes.",
+			"Dash buubbles capture the player inside of them for a half second, allowing you to look around while stuck in place. After the short delay is over, you are launched in the direction you are looking with reset stamina and replenished dashes.",
+			"Spikes, springboards, and dash bubbles can be spawned via the console by typing spawn func_<spike | spring | dash_bubble>."
+		);
+	}
+	else if (Q_stricmp(string, "items") == 0)
+	{
+		gi.bprintf(PRINT_HIGH, "\n\n%s\n\n\n%s\n\n%s\n\n%s\n\n%s\n\n%s\n\n%s\n\n",
+			"Items (collectibles/powerups)",
+			"Dash crystals allow you to regain 1 dash when you touch them. If you grab one midair, you have an opportunity to dash again. It also resets stamina, and respawns a short time after you pick it up.",
+			"Double dash crystals allow you to temporarily dash twice in the air before needing to replenish. This lasts a short time, and when it wears off, you'll only be able to dash once. These also reset stamina and respawn a few seconds after the effect wears off.",
+			"The feather allows you to continuously move in the directions you're looking in for a short time. It is slower than a dash, but lasts longer and can give you much more control. Again, it resets stamina and respawns after it wears off.",
+			"Freeze crystals stop enemies and pause the world for a short time after you collect one. You can still deal damage and navigate around.",
+			"Strawberries are a collectible item for fun points, but come into play more during the speedrun mode. In general, strawberries are bonuses to see how many you can collect.",
+			"These items can be spawned via the console by typing spawn item_<dash_crystal | double_dash_crystal | feather | freeze_crystal | strawberry>."
+		);
+	}
+	else if (Q_stricmp(string, "enemies") == 0)
+	{
+		gi.bprintf(PRINT_HIGH, "\n\n%s\n\n\n%s\n\n%s\n\n%s\n\n%s\n\n%s\n\n",
+			"Enemies (modifed/custom enemy types)",
+			"Dash monsters (flyer) only move periodically, turning to face the player for a half second before dashing quickly towards them. They rest for a short time before repeating. A player can bounce on a dash monster's head and immobalize it for 5 seconds. If they touch you, you die.",
+			"The chase monster (also called Badeline) ((also also called chick)) mimics the player's movement, lagging behind by only a few seconds. If they touch you, you die.",
+			"A boss fight exists, replacing the Quake boss2 with one that is invulnerable to gun/explosive/all other damage and can only be defeated by dashing directly into it 5 times. The player is launched backwards each hit.",
+			"The summoner (gunner) enemy has no gun, but instead spawns dangerous spikes under the player's feet, but these spikes have a small cooldown. They appear first as a warning, then become deadly a second later.",
+			"These enemies can be spawned via the console by typing spawn monster_<flyer | chick | boss2 | gunner>."
+		);
+	}
+	else if (Q_stricmp(string, "speedrun") == 0)
+	{
+		gi.bprintf(PRINT_HIGH, "\n\n%s\n\n\n%s\n\n%s\n\n%s\n\n",
+			"Speedrun mode (in deathmatch map 1)",
+			"Strawberries are strewn about in predetermined locations around the map. Go as fast as you can to collect all 13 and you will be presented with your final time.",
+			"If it's a new record, it gets saved to a file and is persistent between game launches. If it's not a new record, try again! It won't be saved.",
+			"This map can be accessed via the console by typing map q2dm1."
+		);
+	}
+	else
+	{
+		gi.bprintf(PRINT_HIGH, "\n\n%s\n\n%s\n\n%s\n\n%s\n\n",
+			"You may need to bind a couple new controls to get all the features out of this mod. The new commands are dash and +climb.",
+			"I recommend bind f dash and bind ctrl + climb",
+			"Use your dash bind to dash, +climb bind to grab onto walls, jump bind to perform a walljump, and crouch bind to fastfall. Check in-game help (celestehelp) to have this (and more) info while playing.",
+			"Try celestehelp <category> for more specific help on each group of features (<category> can be movement, objects, items, enemies, or speedrun)."
+		);
+	}
+}
+
 void ED_CallSpawn(edict_t* ent);
 void Dash(edict_t* ent);
 void Climb(edict_t* ent, usercmd_t* ucmd);
@@ -1066,6 +1138,8 @@ void ClientCommand(edict_t* ent)
 		Cmd_Climb_f(ent);
 	else if (Q_stricmp(cmd, "pos") == 0)
 		Cmd_Pos_f(ent);
+	else if (Q_stricmp(cmd, "celestehelp") == 0)
+		Cmd_CelesteHelp_f(ent);
 	else	// anything that doesn't match a command will be a chat
 		Cmd_Say_f(ent, false, true);
 }

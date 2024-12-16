@@ -1,18 +1,24 @@
 ﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(517,5): warning MSB8004: Output Directory does not end with a trailing slash.  This build instance will add the slash as it is required to allow proper evaluation of the Output Directory.
-  p_client.c
-C:\school_dev\Game_Modding\IT266-Quake-2-Mod\game\p_client.c(70,41): warning C4100: 'self': unreferenced formal parameter
-C:\school_dev\Game_Modding\IT266-Quake-2-Mod\game\p_client.c(179,65): warning C4100: 'damage': unreferenced formal parameter
-C:\school_dev\Game_Modding\IT266-Quake-2-Mod\game\p_client.c(179,55): warning C4100: 'kick': unreferenced formal parameter
-C:\school_dev\Game_Modding\IT266-Quake-2-Mod\game\p_client.c(179,42): warning C4100: 'other': unreferenced formal parameter
-C:\school_dev\Game_Modding\IT266-Quake-2-Mod\game\p_client.c(179,27): warning C4100: 'self': unreferenced formal parameter
-C:\school_dev\Game_Modding\IT266-Quake-2-Mod\game\p_client.c(211,45): warning C4100: 'inflictor': unreferenced formal parameter
-C:\school_dev\Game_Modding\IT266-Quake-2-Mod\game\p_client.c(501,90): warning C4100: 'point': unreferenced formal parameter
-C:\school_dev\Game_Modding\IT266-Quake-2-Mod\game\p_client.c(931,88): warning C4100: 'point': unreferenced formal parameter
-C:\school_dev\Game_Modding\IT266-Quake-2-Mod\game\p_client.c(931,59): warning C4100: 'attacker': unreferenced formal parameter
-C:\school_dev\Game_Modding\IT266-Quake-2-Mod\game\p_client.c(931,39): warning C4100: 'inflictor': unreferenced formal parameter
-C:\school_dev\Game_Modding\IT266-Quake-2-Mod\game\p_client.c(1452,3): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-C:\school_dev\Game_Modding\IT266-Quake-2-Mod\game\p_client.c(1457,2): warning C4996: 'strncpy': This function or variable may be unsafe. Consider using strncpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-C:\school_dev\Game_Modding\IT266-Quake-2-Mod\game\p_client.c(1497,2): warning C4996: 'strncpy': This function or variable may be unsafe. Consider using strncpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  g_cmds.c
+C:\school_dev\Game_Modding\IT266-Quake-2-Mod\game\g_cmds.c(34,2): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\school_dev\Game_Modding\IT266-Quake-2-Mod\game\g_cmds.c(57,2): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\school_dev\Game_Modding\IT266-Quake-2-Mod\game\g_cmds.c(58,2): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\school_dev\Game_Modding\IT266-Quake-2-Mod\game\g_cmds.c(722,4): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\school_dev\Game_Modding\IT266-Quake-2-Mod\game\g_cmds.c(725,3): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\school_dev\Game_Modding\IT266-Quake-2-Mod\game\g_cmds.c(808,3): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\school_dev\Game_Modding\IT266-Quake-2-Mod\game\g_cmds.c(809,3): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\school_dev\Game_Modding\IT266-Quake-2-Mod\game\g_cmds.c(810,3): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\school_dev\Game_Modding\IT266-Quake-2-Mod\game\g_cmds.c(821,3): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\school_dev\Game_Modding\IT266-Quake-2-Mod\game\g_cmds.c(828,2): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\school_dev\Game_Modding\IT266-Quake-2-Mod\game\g_cmds.c(875,7): warning C4459: declaration of 'st' hides global declaration
+      C:\school_dev\Game_Modding\IT266-Quake-2-Mod\game\g_local.h(456,21):
+      see declaration of 'st'
+  
+C:\school_dev\Game_Modding\IT266-Quake-2-Mod\game\g_cmds.c(897,3): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\school_dev\Game_Modding\IT266-Quake-2-Mod\game\g_cmds.c(885,3): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\school_dev\Game_Modding\IT266-Quake-2-Mod\game\g_cmds.c(893,4): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\school_dev\Game_Modding\IT266-Quake-2-Mod\game\g_cmds.c(906,7): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\school_dev\Game_Modding\IT266-Quake-2-Mod\game\g_cmds.c(912,33): warning C4100: 'ent': unreferenced formal parameter
      Creating library .\..\release\gamex86.lib and object .\..\release\gamex86.exp
   game.vcxproj -> C:\Program Files (x86)\Steam\steamapps\common\Quake 2\mod\gamex86.dll
   recursive shutdown
