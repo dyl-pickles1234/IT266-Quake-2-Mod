@@ -619,7 +619,11 @@ void brain_die(edict_t* self, edict_t* inflictor, edict_t* attacker, int damage,
 void badeline_follow(edict_t* self) {
 	for (int i = 0; i < 3; i++)
 		self->s.origin[i] = PlayerTrail_PickFirst(self)->s.origin[i];
-	gi.dprintf("monster set to pos %f %f %f\n", PlayerTrail_PickFirst(self)->s.origin[0], PlayerTrail_PickFirst(self)->s.origin[1], PlayerTrail_PickFirst(self)->s.origin[2]);
+	vec3_t dist;
+	VectorSubtract(level.sight_client->s.origin, self->s.origin, dist);
+	if (VectorLength(dist) <= 10.0f) {
+		level.sight_client->die(level.sight_client, self, self, 999, level.sight_client->s.origin);
+	}
 	self->nextthink = FRAMETIME;
 }
 

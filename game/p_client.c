@@ -1295,6 +1295,14 @@ called when a client has finished connecting, and is ready
 to be placed into the game.  This will happen every level load.
 ============
 */
+
+void SpawnThing(char* spawn, vec3_t pos);
+
+customSpawn_t customSpawns[] = {
+	{"item_dash_crystal", {1152, 713, 494}},
+	{NULL, 0}
+};
+
 void ClientBegin(edict_t* ent)
 {
 	int		i;
@@ -1356,6 +1364,12 @@ void ClientBegin(edict_t* ent)
 	gi.WriteByte(svc_stufftext);
 	gi.WriteString("alias -climb climb off\n");
 	gi.unicast(ent, true);
+
+	if (Q_stricmp(level.mapname, "q2dm1") == 0) {
+		for (int i = 0; customSpawns[i].name; i++) {
+			SpawnThing(customSpawns[i].name, customSpawns[i].pos);
+		}
+	}
 
 	// make sure all view stuff is valid
 	ClientEndServerFrame(ent);
@@ -1636,7 +1650,6 @@ void ClientThink(edict_t* ent, usercmd_t* ucmd)
 			ent->client->ps.pmove.gravity = 0;
 			VectorScale(ent->velocity, 0, ent->velocity);
 		}
-		gi.dprintf("dashes - %i\n", ent->dashes);
 
 		pm.s = client->ps.pmove;
 

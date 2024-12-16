@@ -589,7 +589,6 @@ qboolean Pickup_Dash_Crystal(edict_t* ent, edict_t* other) {
 	if (other->dashes <= 0 || other->stamina != 110) {
 		gi.dprintf("dash crystal - %f\n", level.time);
 		other->dashes = 1;
-		other->dashTime = 0;
 		other->stamina = 110;
 		SetRespawn(ent, 3);
 		return true;
@@ -601,7 +600,6 @@ qboolean Pickup_Double_Dash_Crystal(edict_t* ent, edict_t* other) {
 	if (other->dashes <= 0 || other->stamina != 110 || !other->doubleDash) {
 		gi.dprintf("double dash crystal - %f\n", level.time);
 		other->dashes = 2;
-		other->dashTime = 0;
 		other->stamina = 110;
 		other->doubleDash = true;
 
@@ -668,6 +666,7 @@ qboolean Pickup_Freeze_Crystal(edict_t* ent, edict_t* other) {
 
 qboolean Pickup_Dash_Bubble(edict_t* ent, edict_t* other) {
 	gi.dprintf("dash bubble - %f\n", level.time);
+	other->dashTime = 0;
 	VectorCopy(ent->s.origin, other->client->ps.pmove.origin);
 	other->client->ps.pmove.gravity = 0;
 	VectorScale(other->velocity, 0, other->velocity);

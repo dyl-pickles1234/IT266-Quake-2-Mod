@@ -1128,3 +1128,8 @@ struct edict_s
 	int inDashBubble;
 };
 
+typedef struct
+{
+	char* name;
+	vec3_t pos;
+} customSpawn_t;

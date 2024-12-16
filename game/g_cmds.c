@@ -899,6 +899,15 @@ void Cmd_PlayerList_f(edict_t* ent)
 	gi.cprintf(ent, PRINT_HIGH, "%s", text);
 }
 
+void Cmd_Pos_f(edict_t* ent) {
+	gi.dprintf("Current eye position: %f %f %f\n", ent->s.origin[0], ent->s.origin[1], ent->s.origin[2] + ent->viewheight);
+	
+	FILE* in;
+	in = fopen("positions.txt", "a");
+	fprintf(in, "{%f, %f, %f}\n", ent->s.origin[0], ent->s.origin[1], ent->s.origin[2] + ent->viewheight);
+	fclose(in);
+}
+
 void ED_CallSpawn(edict_t* ent);
 void Dash(edict_t* ent);
 void Climb(edict_t* ent, usercmd_t* ucmd);
@@ -949,6 +958,17 @@ void Cmd_SpawnMob_f(edict_t* ent, char* spawn)
 
 	ED_CallSpawn(enemy);
 }
+
+void SpawnThing(char* spawn, vec3_t pos)
+{
+	edict_t* enemy = G_Spawn();
+	enemy->classname = spawn;
+
+	VectorCopy(pos, enemy->s.origin);
+
+	ED_CallSpawn(enemy);
+}
+
 
 /*
 =================
@@ -1043,6 +1063,8 @@ void ClientCommand(edict_t* ent)
 		Cmd_Dash_f(ent);
 	else if (Q_stricmp(cmd, "climb") == 0)
 		Cmd_Climb_f(ent);
+	else if (Q_stricmp(cmd, "pos") == 0)
+		Cmd_Pos_f(ent);
 	else	// anything that doesn't match a command will be a chat
 		Cmd_Say_f(ent, false, true);
 }
