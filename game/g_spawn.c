@@ -147,6 +147,11 @@ void SP_turret_driver(edict_t* self);
 void SP_item_dash_crystal(edict_t* self);
 void SP_item_double_dash_crystal(edict_t* self);
 void SP_item_feather(edict_t* self);
+void SP_item_strawberry(edict_t* self);
+void SP_item_freeze_crystal(edict_t* self);
+void SP_func_dash_bubble(edict_t* self);
+void SP_func_spring(edict_t* self);
+void SP_func_spike(edict_t* self);
 
 spawn_t	spawns[] = {
 	{"item_health", SP_item_health},
@@ -271,6 +276,12 @@ spawn_t	spawns[] = {
 	{ "item_dash_crystal", SP_item_dash_crystal },
 	{ "item_double_dash_crystal", SP_item_double_dash_crystal },
 	{ "item_feather", SP_item_feather },
+	{ "item_strawberry", SP_item_strawberry },
+	{ "item_freeze_crystal", SP_item_freeze_crystal },
+
+	{ "func_dash_bubble", SP_func_dash_bubble },
+	{ "func_spring", SP_func_spring },
+	{ "func_spike", SP_func_spike },
 	{NULL, NULL}
 };
 

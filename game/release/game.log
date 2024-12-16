@@ -1,18 +1,14 @@
 ﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(517,5): warning MSB8004: Output Directory does not end with a trailing slash.  This build instance will add the slash as it is required to allow proper evaluation of the Output Directory.
-  p_client.c
-C:\school_dev\Game_Modding\IT266-Quake-2-Mod\game\p_client.c(70,41): warning C4100: 'self': unreferenced formal parameter
-C:\school_dev\Game_Modding\IT266-Quake-2-Mod\game\p_client.c(179,65): warning C4100: 'damage': unreferenced formal parameter
-C:\school_dev\Game_Modding\IT266-Quake-2-Mod\game\p_client.c(179,55): warning C4100: 'kick': unreferenced formal parameter
-C:\school_dev\Game_Modding\IT266-Quake-2-Mod\game\p_client.c(179,42): warning C4100: 'other': unreferenced formal parameter
-C:\school_dev\Game_Modding\IT266-Quake-2-Mod\game\p_client.c(179,27): warning C4100: 'self': unreferenced formal parameter
-C:\school_dev\Game_Modding\IT266-Quake-2-Mod\game\p_client.c(211,45): warning C4100: 'inflictor': unreferenced formal parameter
-C:\school_dev\Game_Modding\IT266-Quake-2-Mod\game\p_client.c(501,90): warning C4100: 'point': unreferenced formal parameter
-C:\school_dev\Game_Modding\IT266-Quake-2-Mod\game\p_client.c(931,88): warning C4100: 'point': unreferenced formal parameter
-C:\school_dev\Game_Modding\IT266-Quake-2-Mod\game\p_client.c(931,59): warning C4100: 'attacker': unreferenced formal parameter
-C:\school_dev\Game_Modding\IT266-Quake-2-Mod\game\p_client.c(931,39): warning C4100: 'inflictor': unreferenced formal parameter
-C:\school_dev\Game_Modding\IT266-Quake-2-Mod\game\p_client.c(1382,3): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-C:\school_dev\Game_Modding\IT266-Quake-2-Mod\game\p_client.c(1387,2): warning C4996: 'strncpy': This function or variable may be unsafe. Consider using strncpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-C:\school_dev\Game_Modding\IT266-Quake-2-Mod\game\p_client.c(1427,2): warning C4996: 'strncpy': This function or variable may be unsafe. Consider using strncpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  g_items.c
+C:\school_dev\Game_Modding\IT266-Quake-2-Mod\game\g_items.c(43,12): warning C4211: nonstandard extension used: redefined extern to static
+C:\school_dev\Game_Modding\IT266-Quake-2-Mod\game\g_items.c(44,12): warning C4211: nonstandard extension used: redefined extern to static
+C:\school_dev\Game_Modding\IT266-Quake-2-Mod\game\g_items.c(45,12): warning C4211: nonstandard extension used: redefined extern to static
+C:\school_dev\Game_Modding\IT266-Quake-2-Mod\game\g_items.c(640,37): warning C4100: 'ent': unreferenced formal parameter
+C:\school_dev\Game_Modding\IT266-Quake-2-Mod\game\g_items.c(851,44): warning C4100: 'item': unreferenced formal parameter
+C:\school_dev\Game_Modding\IT266-Quake-2-Mod\game\g_items.c(907,76): warning C4100: 'surf': unreferenced formal parameter
+C:\school_dev\Game_Modding\IT266-Quake-2-Mod\game\g_items.c(907,57): warning C4100: 'plane': unreferenced formal parameter
+C:\school_dev\Game_Modding\IT266-Quake-2-Mod\game\g_items.c(1038,54): warning C4100: 'activator': unreferenced formal parameter
+C:\school_dev\Game_Modding\IT266-Quake-2-Mod\game\g_items.c(1038,38): warning C4100: 'other': unreferenced formal parameter
      Creating library .\..\release\gamex86.lib and object .\..\release\gamex86.exp
   game.vcxproj -> C:\Program Files (x86)\Steam\steamapps\common\Quake 2\mod\gamex86.dll
   recursive shutdown

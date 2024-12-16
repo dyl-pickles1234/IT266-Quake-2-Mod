@@ -1632,6 +1632,12 @@ void ClientThink(edict_t* ent, usercmd_t* ucmd)
 		Dash(ent);
 		Climb(ent, ucmd);
 		if (ent->feather) Feather(ent);
+		if (ent->inDashBubble) {
+			ent->client->ps.pmove.gravity = 0;
+			VectorScale(ent->velocity, 0, ent->velocity);
+		}
+		gi.dprintf("dashes - %i\n", ent->dashes);
+
 		pm.s = client->ps.pmove;
 
 

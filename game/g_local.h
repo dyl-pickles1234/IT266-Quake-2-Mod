@@ -1122,5 +1122,9 @@ struct edict_s
 	vec3_t climbingPos;
 
 	int feather;
+
+	int strawberries;
+
+	int inDashBubble;
 };
 

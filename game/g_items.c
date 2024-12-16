@@ -561,6 +561,22 @@ void DoubleDashCrystal_think(edict_t* self)
 	SetRespawn(self, 3);
 }
 
+void FreezeCrystal_think(edict_t* self)
+{
+	gi.dprintf("freeze wore off - %f\n", level.time);
+	SetRespawn(self, 3);
+}
+
+void DashBubble_think(edict_t* self)
+{
+	gi.dprintf("dash bubble zoom - %f\n", level.time);
+	self->owner->dashes = self->owner->doubleDash ? 3 : 2;
+	self->owner->dashTime = level.time;
+	self->owner->inDashBubble = false;
+	self->owner->stamina = 110;
+	SetRespawn(self, 3);
+}
+
 void Feather_think(edict_t* self)
 {
 	gi.dprintf("feather wore off - %f\n", level.time);
@@ -619,6 +635,68 @@ qboolean Pickup_Feather(edict_t* ent, edict_t* other) {
 		return true;
 	}
 	else return false;
+}
+
+qboolean Pickup_Strawberry(edict_t* ent, edict_t* other) {
+	other->strawberries++;
+	gi.dprintf("strawberries: %i - %f\n", other->strawberries, level.time);
+	return true;
+}
+
+qboolean Pickup_Freeze_Crystal(edict_t* ent, edict_t* other) {
+	edict_t* from;
+
+	from = g_edicts;
+	for (; from < &g_edicts[globals.num_edicts]; from++)
+	{
+		if (!from->inuse)
+			continue;
+		if (from->solid == SOLID_NOT)
+			continue;
+		from->nextthink += (from->nextthink > 0 ? 10 : 0);
+	}
+
+	ent->think = FreezeCrystal_think;
+	ent->nextthink = level.time + 10;
+	ent->owner = other;
+	ent->flags |= FL_RESPAWN;
+	ent->svflags |= SVF_NOCLIENT;
+	ent->solid = SOLID_NOT;
+
+	return true;
+}
+
+qboolean Pickup_Dash_Bubble(edict_t* ent, edict_t* other) {
+	gi.dprintf("dash bubble - %f\n", level.time);
+	VectorCopy(ent->s.origin, other->client->ps.pmove.origin);
+	other->client->ps.pmove.gravity = 0;
+	VectorScale(other->velocity, 0, other->velocity);
+	other->inDashBubble = true;
+
+	ent->think = DashBubble_think;
+	ent->nextthink = level.time + 0.75f;
+	ent->owner = other;
+
+	ent->flags |= FL_RESPAWN;
+	ent->svflags |= SVF_NOCLIENT;
+	ent->solid = SOLID_NOT;
+
+	return true;
+}
+
+qboolean Pickup_Spring(edict_t* ent, edict_t* other) {
+	other->velocity[2] = 375;
+	other->dashes = other->doubleDash ? 2 : 1;
+	other->stamina = 110;
+	other->dashTime = 0;
+	SetRespawn(ent, 0);
+	return true;
+}
+
+qboolean Pickup_Spike(edict_t* ent, edict_t* other) {
+	other->die(other, ent, ent, 999, other->s.origin);
+	SetRespawn(ent, 0);
+	return true;
 }
 
 qboolean Pickup_Health(edict_t* ent, edict_t* other)
@@ -2197,6 +2275,25 @@ key for computer centers
 			0,
 			NULL
 },
+{ "double_dash_crystal",
+	Pickup_Double_Dash_Crystal,
+	NULL,
+	NULL,
+	NULL,
+	"items/pkup.wav",
+	NULL, 0,
+			NULL,
+			NULL,
+			"Double Dash Crystal",
+			1,
+			2,
+			NULL,
+			0,
+			0,
+			NULL,
+			0,
+			NULL
+},
 { "feather",
 	Pickup_Feather,
 	NULL,
@@ -2207,6 +2304,99 @@ key for computer centers
 			NULL,
 			NULL,
 			"Feather",
+			1,
+			1,
+			NULL,
+			0,
+			0,
+			NULL,
+			0,
+			NULL
+},{ "strawberry",
+	Pickup_Strawberry,
+	NULL,
+	NULL,
+	NULL,
+	"items/pkup.wav",
+	NULL, 0,
+			NULL,
+			NULL,
+			"Strawberry",
+			1,
+			1,
+			NULL,
+			0,
+			0,
+			NULL,
+			0,
+			NULL
+},{ "freeze_crystal",
+	Pickup_Freeze_Crystal,
+	NULL,
+	NULL,
+	NULL,
+	"items/pkup.wav",
+	NULL, 0,
+			NULL,
+			NULL,
+			"Freeze Crystal",
+			1,
+			1,
+			NULL,
+			0,
+			0,
+			NULL,
+			0,
+			NULL
+},
+{ "dash_bubble",
+	Pickup_Dash_Bubble,
+	NULL,
+	NULL,
+	NULL,
+	"items/pkup.wav",
+	NULL, 0,
+			NULL,
+			NULL,
+			"Dash Bubble",
+			1,
+			1,
+			NULL,
+			0,
+			0,
+			NULL,
+			0,
+			NULL
+},
+{ "spring",
+	Pickup_Spring,
+	NULL,
+	NULL,
+	NULL,
+	"items/pkup.wav",
+	NULL, 0,
+			NULL,
+			NULL,
+			"Spring",
+			1,
+			1,
+			NULL,
+			0,
+			0,
+			NULL,
+			0,
+			NULL
+},
+{ "spike",
+	Pickup_Spike,
+	NULL,
+	NULL,
+	NULL,
+	"items/pkup.wav",
+	NULL, 0,
+			NULL,
+			NULL,
+			"Spike",
 			1,
 			1,
 			NULL,
@@ -2276,9 +2466,124 @@ void SP_item_feather(edict_t* self)
 		return;
 	}
 
-	self->model = "models/items/healing/stimpack/tris.md2";
+	self->model = "models/items/invulner/tris.md2";
 	self->count = 1;
 	SpawnItem(self, FindItem("Feather"));
+	self->think = NULL;
+	self->nextthink = 0;
+
+	gi.setmodel(self, self->model);
+	self->solid = SOLID_TRIGGER;
+	self->movetype = MOVETYPE_NONE;
+	self->touch = Touch_Item;
+
+	gi.linkentity(self);
+	gi.soundindex("items/n_health.wav");
+}
+
+void SP_item_strawberry(edict_t* self)
+{
+	if (deathmatch->value && ((int)dmflags->value & DF_NO_HEALTH))
+	{
+		G_FreeEdict(self);
+		return;
+	}
+
+	self->model = "models/items/c_head/tris.md2";
+	self->count = 1;
+	SpawnItem(self, FindItem("Strawberry"));
+	self->think = NULL;
+	self->nextthink = 0;
+
+	gi.setmodel(self, self->model);
+	self->solid = SOLID_TRIGGER;
+	self->movetype = MOVETYPE_NONE;
+	self->touch = Touch_Item;
+
+	gi.linkentity(self);
+	gi.soundindex("items/n_health.wav");
+}
+
+void SP_item_freeze_crystal(edict_t* self)
+{
+	if (deathmatch->value && ((int)dmflags->value & DF_NO_HEALTH))
+	{
+		G_FreeEdict(self);
+		return;
+	}
+
+	self->model = "models/items/healing/stimpack/tris.md2";
+	self->count = 1;
+	SpawnItem(self, FindItem("Freeze Crystal"));
+	self->think = NULL;
+	self->nextthink = 0;
+
+	gi.setmodel(self, self->model);
+	self->solid = SOLID_TRIGGER;
+	self->movetype = MOVETYPE_NONE;
+	self->touch = Touch_Item;
+
+	gi.linkentity(self);
+	gi.soundindex("items/n_health.wav");
+}
+
+void SP_func_dash_bubble(edict_t* self)
+{
+	if (deathmatch->value && ((int)dmflags->value & DF_NO_HEALTH))
+	{
+		G_FreeEdict(self);
+		return;
+	}
+
+	self->model = "models/items/keys/target/tris.md2";
+	self->count = 1;
+	SpawnItem(self, FindItem("Dash Bubble"));
+	self->think = NULL;
+	self->nextthink = 0;
+
+	gi.setmodel(self, self->model);
+	self->solid = SOLID_TRIGGER;
+	self->movetype = MOVETYPE_NONE;
+	self->touch = Touch_Item;
+
+	gi.linkentity(self);
+	gi.soundindex("items/n_health.wav");
+}
+
+void SP_func_spring(edict_t* self)
+{
+	if (deathmatch->value && ((int)dmflags->value & DF_NO_HEALTH))
+	{
+		G_FreeEdict(self);
+		return;
+	}
+
+	self->model = "models/objects/dmspot/tris.md2";
+	self->count = 1;
+	SpawnItem(self, FindItem("Spring"));
+	self->think = NULL;
+	self->nextthink = 0;
+
+	gi.setmodel(self, self->model);
+	self->solid = SOLID_TRIGGER;
+	self->movetype = MOVETYPE_NONE;
+	self->touch = Touch_Item;
+
+	gi.linkentity(self);
+	gi.soundindex("items/n_health.wav");
+}
+
+void SP_func_spike(edict_t* self)
+{
+	if (deathmatch->value && ((int)dmflags->value & DF_NO_HEALTH))
+	{
+		G_FreeEdict(self);
+		return;
+	}
+
+	self->model = "models/items/keys/pyramid/tris.md2";
+	self->count = 1;
+	SpawnItem(self, FindItem("Spike"));
 	self->think = NULL;
 	self->nextthink = 0;
 
